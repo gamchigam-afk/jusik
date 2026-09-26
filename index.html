@@ -2,2695 +2,1573 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>INVEST LAB</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>INVEST LAB — Alpha 0.5</title>
 
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    font-family:
-        Inter,
-        "Noto Sans KR",
-        Arial,
-        sans-serif;
-
-    background:#070b14;
-    color:#f5f7fb;
-
-    min-height:100vh;
+  font-family:Inter,Arial,"Noto Sans KR",sans-serif;
+  background:#070a10;
+  color:#eef2f8;
+  min-height:100vh;
 }
 
-button,
-input{
-    font:inherit;
+button,input{font:inherit}
+button{cursor:pointer}
+
+.app{
+  display:flex;
+  min-height:100vh;
 }
 
-button{
-    cursor:pointer;
-}
+/* ================= SIDEBAR ================= */
 
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-body::before{
-    content:"";
-
-    position:fixed;
-
-    width:600px;
-    height:600px;
-
-    top:-300px;
-    right:-200px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(53,125,255,.12),
-            transparent 65%
-        );
-
-    pointer-events:none;
-}
-
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.topbar{
-
-    height:68px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 28px;
-
-    background:
-        rgba(12,18,31,.88);
-
-    backdrop-filter:blur(18px);
-
-    border-bottom:
-        1px solid rgba(255,255,255,.07);
-
-    position:sticky;
-    top:0;
-
-    z-index:100;
+.sidebar{
+  width:230px;
+  position:fixed;
+  inset:0 auto 0 0;
+  z-index:20;
+  padding:22px 14px;
+  background:#0b0f17;
+  border-right:1px solid #1a202c;
 }
 
 .logo{
-
-    display:flex;
-    align-items:center;
-
-    gap:9px;
-
-    font-size:20px;
-    font-weight:800;
-
-    letter-spacing:-.5px;
+  padding:5px 12px 28px;
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:-.7px;
 }
 
-.logo-icon{
-
-    width:34px;
-    height:34px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #287cff,
-            #62b0ff
-        );
-
-    box-shadow:
-        0 6px 25px
-        rgba(40,124,255,.28);
-}
-
-.logo span{
-    color:#58a7ff;
-}
-
-.top-right{
-
-    display:flex;
-    align-items:center;
-
-    gap:20px;
-}
-
-.market-status{
-
-    display:flex;
-    align-items:center;
-
-    gap:7px;
-
-    color:#8491aa;
-
-    font-size:12px;
-}
-
-.status-dot{
-
-    width:7px;
-    height:7px;
-
-    border-radius:50%;
-
-    background:#45df91;
-
-    box-shadow:
-        0 0 10px #45df91;
-}
-
-.cash-box{
-
-    padding:
-        8px 13px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    background:
-        rgba(255,255,255,.035);
-
-    border-radius:9px;
-
-    color:#8794ad;
-
-    font-size:12px;
-}
-
-.cash-box strong{
-
-    color:white;
-
-    margin-left:7px;
-
-    font-size:14px;
-}
-
-
-/* =========================================================
-   LAYOUT
-========================================================= */
-
-.layout{
-
-    display:flex;
-
-    min-height:
-        calc(100vh - 68px);
-}
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-.sidebar{
-
-    width:220px;
-
-    background:
-        rgba(11,16,28,.92);
-
-    border-right:
-        1px solid
-        rgba(255,255,255,.06);
-
-    padding:22px 13px;
-
-    flex-shrink:0;
-}
-
-.menu-title{
-
-    font-size:10px;
-
-    color:#56627a;
-
-    letter-spacing:1.4px;
-
-    margin:
-        8px 11px
-        10px;
-}
+.logo span{color:#4c9cff}
 
 .nav{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:5px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
 
 .nav button{
-
-    width:100%;
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-
-    border:0;
-
-    background:transparent;
-
-    color:#7f8ca5;
-
-    padding:
-        12px 13px;
-
-    border-radius:9px;
-
-    text-align:left;
-
-    transition:.18s;
+  border:0;
+  border-radius:10px;
+  padding:13px 14px;
+  background:transparent;
+  color:#8996aa;
+  text-align:left;
+  transition:.2s;
 }
 
 .nav button:hover{
-
-    background:
-        rgba(255,255,255,.045);
-
-    color:#dbe4f3;
+  background:#111722;
+  color:#fff;
 }
 
 .nav button.active{
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(53,126,255,.18),
-            rgba(53,126,255,.04)
-        );
-
-    color:#69b0ff;
-
-    box-shadow:
-        inset 2px 0 #4c9cff;
-}
-
-.nav-icon{
-
-    width:20px;
-
-    text-align:center;
-
-    font-size:16px;
+  background:#182337;
+  color:#fff;
 }
 
 .sidebar-bottom{
-
-    margin-top:30px;
-
-    padding:14px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.06);
-
-    background:
-        rgba(255,255,255,.025);
-
-    border-radius:10px;
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:22px;
 }
 
-.sidebar-bottom-title{
-
-    color:#66738c;
-
-    font-size:11px;
-
-    margin-bottom:8px;
+.market-status{
+  padding:13px;
+  border-radius:12px;
+  background:#0f151f;
+  border:1px solid #1c2533;
+  color:#8793a5;
+  font-size:12px;
 }
 
-.sidebar-bottom-text{
-
-    color:#a8b3c7;
-
-    font-size:12px;
-
-    line-height:1.5;
+.market-status strong{
+  display:block;
+  margin-top:4px;
+  color:#59d98e;
 }
 
-
-/* =========================================================
-   MAIN
-========================================================= */
+/* ================= MAIN ================= */
 
 .main{
-
-    width:100%;
-
-    max-width:1500px;
-
-    margin:auto;
-
-    padding:28px;
+  width:calc(100% - 230px);
+  margin-left:230px;
 }
 
-.page{
-    display:none;
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  height:70px;
+  padding:0 30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(7,10,16,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #171d28;
 }
 
-.page.active{
-    display:block;
+.top-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#7e8ba0;
+  font-size:13px;
 }
 
-
-/* =========================================================
-   PAGE HEADER
-========================================================= */
-
-.page-header{
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:space-between;
-
-    margin-bottom:23px;
+.market-pill{
+  padding:6px 9px;
+  border-radius:7px;
+  background:#102219;
+  color:#59d98e;
+  font-size:10px;
+  font-weight:800;
 }
+
+.market-pill.closed{
+  background:#21151a;
+  color:#ff7185;
+}
+
+.cash{
+  text-align:right;
+}
+
+.cash small{
+  display:block;
+  color:#7e899a;
+  font-size:11px;
+}
+
+.cash strong{
+  font-size:17px;
+}
+
+.content{
+  max-width:1500px;
+  margin:auto;
+  padding:28px;
+}
+
+.page{display:none}
+.page.active{display:block}
 
 .page-title{
-
-    font-size:25px;
-
-    font-weight:800;
-
-    letter-spacing:-.7px;
+  margin-bottom:22px;
 }
 
-.page-subtitle{
-
-    color:#68758e;
-
-    font-size:12px;
-
-    margin-top:6px;
+.page-title h1{
+  font-size:27px;
+  letter-spacing:-1px;
 }
 
-.date-label{
-
-    color:#77849c;
-
-    font-size:12px;
+.page-title p{
+  margin-top:6px;
+  color:#758196;
+  font-size:13px;
 }
 
-
-/* =========================================================
-   COMMON CARD
-========================================================= */
+/* ================= COMMON ================= */
 
 .card{
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(20,28,45,.95),
-            rgba(13,19,32,.96)
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.065);
-
-    border-radius:14px;
-
-    box-shadow:
-        0 12px 40px
-        rgba(0,0,0,.16);
-}
-
-.card-header{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:
-        19px 20px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.055);
+  padding:20px;
+  border-radius:16px;
+  background:#0c1119;
+  border:1px solid #1a2230;
 }
 
 .card-title{
-
-    font-size:14px;
-
-    font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:17px;
 }
 
-.card-subtitle{
-
-    color:#65718a;
-
-    font-size:11px;
+.card-title h2{font-size:15px}
+.card-title span{
+  color:#68758a;
+  font-size:10px;
 }
 
+.up{color:#ff6077}
+.down{color:#4c9cff}
+.neutral{color:#8996ad}
 
-/* =========================================================
-   HOME SUMMARY
-========================================================= */
+/* ================= MARKET INDEX ================= */
 
-.summary-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:13px;
-
-    margin-bottom:17px;
+.index-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:18px;
 }
 
-.summary{
-
-    padding:20px;
-
-    position:relative;
-
-    overflow:hidden;
+.index-card{
+  padding:18px;
+  border-radius:15px;
+  background:linear-gradient(145deg,#101620,#0c1119);
+  border:1px solid #1a2230;
 }
 
-.summary::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:100px;
-    height:100px;
-
-    right:-45px;
-    bottom:-55px;
-
-    border-radius:50%;
-
-    background:
-        rgba(75,153,255,.08);
+.index-card .label{
+  margin-bottom:10px;
+  color:#7c899d;
+  font-size:11px;
 }
 
-.summary-label{
-
-    color:#707d96;
-
-    font-size:11px;
+.index-value{
+  font-size:22px;
+  font-weight:800;
 }
 
-.summary-value{
-
-    font-size:25px;
-
-    font-weight:800;
-
-    margin-top:8px;
-
-    letter-spacing:-.7px;
+.index-change{
+  margin-top:7px;
+  font-size:12px;
+  font-weight:700;
 }
 
-.summary-change{
+/* ================= DASHBOARD ================= */
 
-    margin-top:6px;
-
-    font-size:11px;
-
-    color:#69768e;
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.4fr .8fr;
+  gap:18px;
 }
 
-
-/* =========================================================
-   MARKET HOME
-========================================================= */
-
-.home-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        1.15fr .85fr;
-
-    gap:16px;
+.news-main{
+  background:
+    radial-gradient(circle at 90% 20%,rgba(76,156,255,.12),transparent 35%),
+    #0c1119;
 }
+
+.news-tag{
+  margin-bottom:12px;
+  color:#4c9cff;
+  font-size:11px;
+  font-weight:800;
+}
+
+.news-main h2{
+  margin-bottom:9px;
+  font-size:20px;
+  line-height:1.45;
+}
+
+.news-main p{
+  color:#8793a6;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.news-meta{
+  display:flex;
+  gap:7px;
+  margin-top:14px;
+  flex-wrap:wrap;
+}
+
+.impact{
+  padding:7px 10px;
+  border-radius:8px;
+  background:#121a25;
+  color:#cbd4df;
+  font-size:11px;
+}
+
+.news-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.news-item{
+  padding:13px;
+  border-radius:11px;
+  background:#0f151e;
+  border:1px solid #18202d;
+  cursor:pointer;
+  transition:.18s;
+}
+
+.news-item:hover{
+  border-color:#31557e;
+}
+
+.news-item strong{
+  display:block;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.news-item span{
+  display:block;
+  margin-top:5px;
+  color:#657287;
+  font-size:10px;
+}
+
+.portfolio-box{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.stat-card{
+  padding:19px;
+  border-radius:15px;
+  background:#0c1119;
+  border:1px solid #1a2230;
+}
+
+.stat-card small{
+  display:block;
+  margin-bottom:8px;
+  color:#758196;
+  font-size:11px;
+}
+
+.stat-card strong{
+  font-size:21px;
+}
+
+/* ================= STOCK ================= */
 
 .stock-list{
-
-    padding:9px;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
 }
 
-.stock{
-
-    display:grid;
-
-    grid-template-columns:
-        1.5fr 1fr 90px;
-
-    align-items:center;
-
-    padding:
-        14px 12px;
-
-    border-radius:9px;
-
-    transition:.15s;
-
-    cursor:pointer;
+.stock-row{
+  display:grid;
+  grid-template-columns:1.3fr .9fr .8fr .8fr;
+  align-items:center;
+  padding:15px;
+  border-radius:12px;
+  background:#0e141d;
+  border:1px solid #18202c;
+  transition:.18s;
 }
 
-.stock:hover{
-
-    background:
-        rgba(255,255,255,.035);
+.stock-row:hover{
+  border-color:#2b394c;
+  transform:translateY(-1px);
 }
 
-.stock-name{
-
-    font-size:13px;
-
-    font-weight:700;
+.stock-name strong{
+  display:block;
+  font-size:14px;
 }
 
-.stock-code{
-
-    color:#59657d;
-
-    font-size:10px;
-
-    margin-top:4px;
+.stock-name span{
+  display:block;
+  margin-top:4px;
+  color:#647186;
+  font-size:10px;
 }
 
-.stock-price{
-
-    text-align:right;
-
-    font-size:13px;
-
-    font-weight:600;
-}
+.stock-price{font-weight:800}
 
 .stock-change{
-
-    text-align:right;
-
-    font-size:11px;
-
-    margin-left:10px;
+  font-size:12px;
+  font-weight:700;
 }
 
-
-/* =========================================================
-   DETAIL
-========================================================= */
-
-.detail{
-
-    padding:20px;
+.volume{
+  text-align:right;
+  color:#78869a;
+  font-size:11px;
 }
 
-.detail-top{
+/* ================= MARKET ================= */
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:flex-start;
+.market-layout{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:18px;
 }
 
-.detail-name{
-
-    font-size:20px;
-
-    font-weight:800;
+.stock-selector{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:18px;
 }
 
-.detail-code{
-
-    color:#65718a;
-
-    font-size:10px;
-
-    margin-top:4px;
+.stock-select-btn{
+  padding:12px 8px;
+  border-radius:10px;
+  background:#0d131c;
+  border:1px solid #1a2330;
+  color:#aeb9c8;
+  font-size:11px;
 }
 
-.detail-price{
-
-    font-size:29px;
-
-    font-weight:800;
-
-    margin-top:14px;
+.stock-select-btn.active{
+  background:#172237;
+  border-color:#31557e;
+  color:#fff;
 }
 
-.detail-change{
-
-    font-size:12px;
-
-    margin-top:4px;
-}
-
-
-/* =========================================================
-   CHART
-========================================================= */
-
-.chart{
-
-    height:250px;
-
-    margin-top:15px;
-
-    border-radius:10px;
-
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(5,10,20,.7),
-            rgba(7,12,22,.3)
-        );
+.chart-box{
+  height:380px;
 }
 
 canvas{
-
-    width:100%;
-    height:100%;
+  width:100%;
+  height:100%;
 }
 
+.chart-controls{
+  display:flex;
+  gap:6px;
+}
 
-/* =========================================================
-   TRADE
-========================================================= */
+.chart-controls button{
+  padding:6px 9px;
+  border-radius:7px;
+  background:#111823;
+  border:1px solid #1c2735;
+  color:#7e8a9d;
+  font-size:10px;
+}
+
+.chart-controls button.active{
+  background:#20314a;
+  color:#fff;
+}
+
+/* ================= TRADE ================= */
 
 .trade-box{
-
-    margin-top:17px;
-
-    padding-top:17px;
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.055);
+  position:sticky;
+  top:90px;
 }
 
-.trade-info{
+.trade-stock{
+  margin-bottom:20px;
+}
 
-    display:flex;
+.trade-stock h2{font-size:19px}
 
-    justify-content:space-between;
+.trade-stock span{
+  color:#69768a;
+  font-size:11px;
+}
 
-    color:#6e7b94;
+.trade-price{
+  margin-top:12px;
+  font-size:28px;
+  font-weight:900;
+}
 
-    font-size:11px;
-
-    margin-bottom:8px;
+.trade-change{
+  margin-top:5px;
+  font-size:12px;
 }
 
 .trade-input{
-
-    width:100%;
-
-    background:#090f1c;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    color:white;
-
-    padding:12px;
-
-    border-radius:8px;
-
-    outline:none;
-
-    transition:.15s;
+  margin-top:22px;
 }
 
-.trade-input:focus{
-
-    border-color:#438eff;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(67,142,255,.09);
+.trade-input label{
+  display:block;
+  margin-bottom:7px;
+  color:#778398;
+  font-size:11px;
 }
+
+.trade-input input{
+  width:100%;
+  padding:13px;
+  border-radius:9px;
+  outline:none;
+  background:#080c12;
+  border:1px solid #202a38;
+  color:#fff;
+}
+
+.trade-input input:focus{
+  border-color:#467bb8;
+}
+
+.estimate{
+  margin-top:13px;
+  padding:13px;
+  border-radius:9px;
+  background:#101720;
+}
+
+.estimate div{
+  display:flex;
+  justify-content:space-between;
+  color:#748196;
+  font-size:11px;
+}
+
+.estimate div+div{margin-top:7px}
+
+.estimate strong{color:#eaf0f8}
 
 .trade-buttons{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:8px;
-
-    margin-top:8px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:13px;
 }
 
 .trade-buttons button{
-
-    border:0;
-
-    padding:12px;
-
-    border-radius:8px;
-
-    font-weight:700;
-
-    transition:.15s;
+  padding:13px;
+  border:0;
+  border-radius:9px;
+  color:#fff;
+  font-weight:800;
+  transition:.15s;
 }
 
-.buy{
+.buy{background:#b9344d}
+.sell{background:#2f72b8}
 
-    background:
-        linear-gradient(
-            135deg,
-            #ef4d68,
-            #ff6077
-        );
+.buy:hover{background:#d4425c}
+.sell:hover{background:#3b86d3}
 
-    color:white;
+.trade-buttons button:disabled{
+  opacity:.35;
+  cursor:not-allowed;
 }
 
-.sell{
-
-    background:
-        linear-gradient(
-            135deg,
-            #347fd5,
-            #4c9cff
-        );
-
-    color:white;
+.holding{
+  margin-top:13px;
+  text-align:center;
+  color:#788599;
+  font-size:11px;
 }
 
-.trade-buttons button:hover{
+/* ================= ORDER STATUS ================= */
 
-    transform:translateY(-1px);
-
-    filter:brightness(1.08);
+.order-status{
+  display:none;
+  margin-top:13px;
+  padding:12px;
+  border-radius:9px;
+  background:#101a16;
+  border:1px solid #203b2d;
+  color:#65d999;
+  text-align:center;
+  font-size:11px;
 }
+
+.order-status.show{
+  display:block;
+  animation:orderFlash .5s ease;
+}
+
+@keyframes orderFlash{
+  0%{opacity:0;transform:scale(.97)}
+  100%{opacity:1;transform:scale(1)}
+}
+
+/* ================= ASSETS ================= */
+
+.asset-summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:18px;
+}
+
+.asset-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.asset-table th{
+  padding:11px;
+  border-bottom:1px solid #1a2230;
+  color:#657287;
+  font-size:10px;
+  text-align:left;
+}
+
+.asset-table td{
+  padding:15px 11px;
+  border-bottom:1px solid #151d28;
+  font-size:12px;
+}
+
+/* ================= HISTORY ================= */
+
+.history-list{
+  display:flex;
+  flex-direction:column;
+}
+
+.history-row{
+  display:grid;
+  grid-template-columns:80px 1fr 120px 140px;
+  align-items:center;
+  padding:15px 10px;
+  border-bottom:1px solid #151d28;
+}
+
+.type{
+  font-size:11px;
+  font-weight:800;
+}
+
+.buy-type{color:#ff6077}
+.sell-type{color:#4c9cff}
+
+.history-name strong{
+  display:block;
+  font-size:12px;
+}
+
+.history-name span{
+  color:#68758a;
+  font-size:10px;
+}
+
+.history-price{
+  text-align:right;
+  font-size:12px;
+}
+
+.history-time{
+  text-align:right;
+  color:#657287;
+  font-size:10px;
+}
+
+/* ================= NEWS DETAIL ================= */
+
+.news-detail{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:50;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(5px);
+}
+
+.news-detail.show{display:flex}
+
+.news-modal{
+  width:min(620px,100%);
+  padding:25px;
+  border-radius:17px;
+  background:#0c1119;
+  border:1px solid #263345;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+
+.modal-label{
+  color:#4c9cff;
+  font-size:10px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.news-modal h2{
+  font-size:21px;
+  line-height:1.5;
+}
+
+.news-modal p{
+  margin-top:13px;
+  color:#8793a6;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.detail-impacts{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+
+.modal-close{
+  width:100%;
+  margin-top:22px;
+  padding:12px;
+  border:0;
+  border-radius:9px;
+  background:#182337;
+  color:#fff;
+}
+
+/* ================= TOAST ================= */
+
+.toast-container{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:100;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.toast{
+  min-width:240px;
+  padding:13px 15px;
+  border-radius:11px;
+  background:#151c27;
+  border:1px solid #273447;
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+  animation:toastIn .25s ease;
+  font-size:12px;
+}
+
+.toast strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.toast span{
+  color:#8491a4;
+  font-size:10px;
+}
+
+@keyframes toastIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+  .sidebar{
+    width:68px;
+    padding:15px 8px;
+  }
+
+  .logo{
+    padding:5px 0 25px;
+    font-size:0;
+    text-align:center;
+  }
+
+  .logo span{font-size:20px}
+
+  .nav button{
+    padding:13px 5px;
+    font-size:0;
+    text-align:center;
+  }
+
+  .nav button::first-letter{font-size:18px}
+
+  .sidebar-bottom{display:none}
+
+  .main{
+    width:calc(100% - 68px);
+    margin-left:68px;
+  }
+
+  .content{padding:18px}
+
+  .dashboard-grid,
+  .market-layout{
+    grid-template-columns:1fr;
+  }
+
+  .trade-box{
+    position:static;
+  }
+}
+
+@media(max-width:650px){
+
+  .topbar{padding:0 15px}
+
+  .content{padding:14px}
+
+  .index-grid,
+  .portfolio-box,
+  .asset-summary{
+    grid-template-columns:1fr;
+  }
+
+  .stock-row{
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+
+  .volume{text-align:left}
+
+  .stock-selector{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .chart-box{height:280px}
+
+  .history-row{
+    grid-template-columns:60px 1fr;
+    gap:8px;
+  }
+
+  .history-price,
+  .history-time{
+    text-align:left;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+    INVEST <span>LAB</span>
+  </div>
+
+  <nav class="nav">
+    <button class="active" onclick="showPage('dashboard',this)">📊 대시보드</button>
+    <button onclick="showPage('market',this)">📈 시장</button>
+    <button onclick="showPage('assets',this)">💼 내 자산</button>
+    <button onclick="showPage('history',this)">🧾 거래내역</button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="market-status">
+      시장 상태
+      <strong id="sideMarketStatus">● SIMULATION LIVE</strong>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <div class="top-left">
+    <span id="marketPill" class="market-pill">
+      ● MARKET OPEN
+    </span>
+
+    <span id="marketClock">
+      09:00
+    </span>
+  </div>
+
+  <div class="cash">
+    <small>사용 가능 현금</small>
+    <strong id="topCash">₩1,000,000</strong>
+  </div>
+
+</header>
+
+<div class="content">
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard" class="page active">
+
+  <div class="page-title">
+    <h1>시장 대시보드</h1>
+    <p>오늘의 시장 흐름과 주요 종목을 확인하세요.</p>
+  </div>
+
+  <div class="index-grid">
+
+    <div class="index-card">
+      <div class="label">KOSPI SIMULATION</div>
+      <div class="index-value" id="kospiValue">2,734.21</div>
+      <div class="index-change up" id="kospiChange">▲ +1.24%</div>
+    </div>
+
+    <div class="index-card">
+      <div class="label">KOSDAQ SIMULATION</div>
+      <div class="index-value" id="kosdaqValue">842.16</div>
+      <div class="index-change down" id="kosdaqChange">▼ -0.38%</div>
+    </div>
+
+    <div class="index-card">
+      <div class="label">MARKET MOOD</div>
+      <div class="index-value" id="marketMood">🟢 강세</div>
+      <div class="index-change neutral">
+        뉴스 기반 분석
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dashboard-grid">
+
+    <div class="card news-main">
+
+      <div class="news-tag">TODAY'S MARKET</div>
+
+      <h2 id="mainNewsTitle">
+        오늘의 뉴스를 불러오는 중...
+      </h2>
+
+      <p id="mainNewsDescription"></p>
+
+      <div class="news-meta" id="newsImpact"></div>
+
+    </div>
+
+    <div class="card">
+
+      <div class="card-title">
+        <h2>주요 뉴스</h2>
+        <span id="newsDate">TODAY</span>
+      </div>
+
+      <div class="news-list" id="newsList"></div>
+
+    </div>
+
+  </div>
+
+  <div class="portfolio-box">
+
+    <div class="stat-card">
+      <small>총 자산</small>
+      <strong id="totalAsset">₩1,000,000</strong>
+    </div>
+
+    <div class="stat-card">
+      <small>주식 평가액</small>
+      <strong id="stockValue">₩0</strong>
+    </div>
+
+    <div class="stat-card">
+      <small>총 손익</small>
+      <strong id="profitLoss">₩0</strong>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:18px">
+
+    <div class="card-title">
+      <h2>주요 종목</h2>
+      <span>LIVE</span>
+    </div>
+
+    <div class="stock-list" id="dashboardStocks"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= MARKET ================= -->
+
+<section id="market" class="page">
+
+  <div class="page-title">
+    <h1>시장</h1>
+    <p>종목을 선택하고 가상 매매를 진행하세요.</p>
+  </div>
+
+  <div class="market-layout">
+
+    <div>
+
+      <div class="stock-selector" id="stockSelector"></div>
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <div>
+            <h2 id="chartStockName">삼성전자</h2>
+            <span id="chartStockCode">005930</span>
+          </div>
+
+          <div class="chart-controls">
+            <button class="active" onclick="setChartRange('1D',this)">1D</button>
+            <button onclick="setChartRange('1W',this)">1W</button>
+            <button onclick="setChartRange('1M',this)">1M</button>
+            <button onclick="setChartRange('ALL',this)">ALL</button>
+          </div>
+
+        </div>
+
+        <div class="chart-box">
+          <canvas id="stockChart"></canvas>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card trade-box">
+
+      <div class="trade-stock">
+
+        <h2 id="tradeStockName">삼성전자</h2>
+        <span id="tradeStockCode">005930</span>
+
+        <div class="trade-price" id="tradePrice">
+          ₩82,300
+        </div>
+
+        <div class="trade-change up" id="tradeChange">
+          ▲ +0.00%
+        </div>
+
+      </div>
+
+      <div class="trade-input">
+
+        <label>거래 수량</label>
+
+        <input
+          id="tradeQuantity"
+          type="number"
+          min="1"
+          value="1"
+          oninput="updateEstimate()"
+        >
+
+      </div>
+
+      <div class="estimate">
+
+        <div>
+          <span>예상 거래금액</span>
+          <strong id="estimateAmount">₩82,300</strong>
+        </div>
+
+        <div>
+          <span>보유 수량</span>
+          <strong id="holdingAmount">0주</strong>
+        </div>
+
+      </div>
+
+      <div class="trade-buttons">
+
+        <button
+          id="buyButton"
+          class="buy"
+          onclick="trade('buy')">
+          매수
+        </button>
+
+        <button
+          id="sellButton"
+          class="sell"
+          onclick="trade('sell')">
+          매도
+        </button>
+
+      </div>
+
+      <div class="order-status" id="orderStatus">
+        주문 체결 처리 중...
+      </div>
+
+      <div class="holding">
+        현재 사용 가능 현금
+        <strong id="tradeCash">₩1,000,000</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ASSETS ================= -->
+
+<section id="assets" class="page">
+
+  <div class="page-title">
+    <h1>내 자산</h1>
+    <p>현재 보유 중인 자산을 확인하세요.</p>
+  </div>
+
+  <div class="asset-summary">
+
+    <div class="stat-card">
+      <small>총 자산</small>
+      <strong id="assetTotal">₩1,000,000</strong>
+    </div>
+
+    <div class="stat-card">
+      <small>현금</small>
+      <strong id="assetCash">₩1,000,000</strong>
+    </div>
+
+    <div class="stat-card">
+      <small>주식 평가액</small>
+      <strong id="assetStocks">₩0</strong>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-title">
+      <h2>보유 종목</h2>
+      <span>PORTFOLIO</span>
+    </div>
+
+    <table class="asset-table">
+
+      <thead>
+        <tr>
+          <th>종목</th>
+          <th>보유</th>
+          <th>현재가</th>
+          <th>평가금액</th>
+          <th>수익률</th>
+        </tr>
+      </thead>
+
+      <tbody id="assetTable"></tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+<!-- ================= HISTORY ================= -->
+
+<section id="history" class="page">
+
+  <div class="page-title">
+    <h1>거래내역</h1>
+    <p>지금까지 진행한 가상 거래 기록입니다.</p>
+  </div>
+
+  <div class="card">
+
+    <div class="card-title">
+      <h2>거래 기록</h2>
+      <span id="historyCount">0 TRANSACTIONS</span>
+    </div>
+
+    <div class="history-list" id="historyList"></div>
+
+  </div>
+
+</section>
+
+</div>
+</main>
+</div>
+
+
+<!-- ================= NEWS MODAL ================= -->
+
+<div class="news-detail" id="newsModal">
+
+  <div class="news-modal">
+
+    <div class="modal-label">MARKET NEWS</div>
+
+    <h2 id="modalTitle"></h2>
+
+    <p id="modalDescription"></p>
+
+    <div class="detail-impacts" id="modalImpacts"></div>
+
+    <button class="modal-close" onclick="closeNews()">
+      닫기
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast-container" id="toastContainer"></div>
+
+
+<script>
+
+/* =========================================================
+   INVEST LAB ALPHA 0.5
+========================================================= */
+
+const STORAGE_KEY = "investLabAlpha05";
+
+const INITIAL_CASH = 1000000;
+
+
+/* =========================================================
+   STOCK DATA
+========================================================= */
+
+const stockData = {
+
+  samsung:{
+    name:"삼성전자",
+    code:"005930",
+    price:82300,
+    startPrice:82300,
+    owned:0,
+    volume:124800
+  },
+
+  sk:{
+    name:"SK하이닉스",
+    code:"000660",
+    price:214500,
+    startPrice:214500,
+    owned:0,
+    volume:88200
+  },
+
+  naver:{
+    name:"NAVER",
+    code:"035420",
+    price:246000,
+    startPrice:246000,
+    owned:0,
+    volume:56300
+  },
+
+  kakao:{
+    name:"카카오",
+    code:"035720",
+    price:54200,
+    startPrice:54200,
+    owned:0,
+    volume:74300
+  },
+
+  hyundai:{
+    name:"현대자동차",
+    code:"005380",
+    price:198000,
+    startPrice:198000,
+    owned:0,
+    volume:43200
+  },
+
+  lg:{
+    name:"LG에너지솔루션",
+    code:"373220",
+    price:389000,
+    startPrice:389000,
+    owned:0,
+    volume:32100
+  }
+
+};
+
+
+let cash = INITIAL_CASH;
+
+let stocks =
+  JSON.parse(JSON.stringify(stockData));
+
+let tradeHistory = [];
+
+let selectedStock = "samsung";
+
+let chartRange = "1D";
+
+let dailyNews = null;
+
+let previousDate = null;
+
+let candles = {};
 
 
 /* =========================================================
    NEWS
 ========================================================= */
 
-.news-card{
-
-    margin-top:16px;
-}
-
-.news-list{
-
-    padding:10px;
-}
-
-.news-item{
-
-    padding:
-        15px 11px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.045);
-}
-
-.news-item:last-child{
-
-    border-bottom:0;
-}
-
-.news-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:6px;
-}
-
-.news-title{
-
-    font-size:13px;
-
-    font-weight:700;
-}
-
-.news-time{
-
-    color:#58657d;
-
-    font-size:10px;
-}
-
-.news-text{
-
-    color:#7f8ca4;
-
-    font-size:11px;
-
-    line-height:1.55;
-}
-
-.news-impact{
-
-    display:inline-block;
-
-    margin-top:8px;
-
-    padding:
-        4px 7px;
-
-    border-radius:5px;
-
-    font-size:9px;
-
-    background:
-        rgba(255,255,255,.045);
-
-    color:#8996ad;
-}
-
-
-/* =========================================================
-   DAILY NEWS BANNER
-========================================================= */
-
-.daily-news{
-
-    margin-top:16px;
-
-    padding:19px;
-
-    position:relative;
-
-    overflow:hidden;
-}
-
-.daily-news::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:200px;
-    height:200px;
-
-    right:-90px;
-    top:-100px;
-
-    border-radius:50%;
-
-    background:
-        rgba(58,143,255,.1);
-}
-
-.daily-label{
-
-    color:#5ca5ff;
-
-    font-size:10px;
-
-    font-weight:700;
-
-    letter-spacing:1px;
-
-    margin-bottom:8px;
-}
-
-.daily-title{
-
-    font-size:18px;
-
-    font-weight:800;
-
-    position:relative;
-}
-
-.daily-description{
-
-    color:#7d8aa3;
-
-    font-size:11px;
-
-    line-height:1.6;
-
-    margin-top:7px;
-
-    position:relative;
-}
-
-.daily-impact{
-
-    margin-top:12px;
-
-    display:flex;
-
-    gap:6px;
-
-    flex-wrap:wrap;
-}
-
-.impact-tag{
-
-    padding:
-        5px 8px;
-
-    border-radius:6px;
-
-    font-size:9px;
-
-    background:
-        rgba(255,255,255,.05);
-
-    color:#9ba7ba;
-}
-
-
-/* =========================================================
-   PORTFOLIO
-========================================================= */
-
-.portfolio-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:16px;
-}
-
-.portfolio-list{
-
-    padding:10px;
-}
-
-.portfolio-item{
-
-    display:grid;
-
-    grid-template-columns:
-        1.4fr 1fr 1fr 80px;
-
-    align-items:center;
-
-    padding:15px 11px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.045);
-}
-
-.portfolio-item:last-child{
-    border-bottom:0;
-}
-
-.portfolio-name{
-
-    font-weight:700;
-
-    font-size:12px;
-}
-
-.portfolio-sub{
-
-    color:#59657c;
-
-    font-size:10px;
-
-    margin-top:3px;
-}
-
-.portfolio-data{
-
-    font-size:11px;
-
-    text-align:right;
-}
-
-
-/* =========================================================
-   HISTORY
-========================================================= */
-
-.history-list{
-
-    padding:10px;
-}
-
-.history-item{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:
-        14px 11px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.045);
-}
-
-.history-left{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-}
-
-.history-type{
-
-    padding:
-        4px 7px;
-
-    border-radius:5px;
-
-    font-size:9px;
-
-    font-weight:700;
-}
-
-.history-buy{
-
-    background:
-        rgba(255,76,104,.12);
-
-    color:#ff6b80;
-}
-
-.history-sell{
-
-    background:
-        rgba(60,143,235,.12);
-
-    color:#5ba5ff;
-}
-
-.history-name{
-
-    font-size:12px;
-
-    font-weight:600;
-}
-
-.history-time{
-
-    color:#56627a;
-
-    font-size:9px;
-
-    margin-top:3px;
-}
-
-.history-money{
-
-    font-size:12px;
-
-    font-weight:600;
-}
-
-
-/* =========================================================
-   EMPTY
-========================================================= */
-
-.empty{
-
-    padding:35px;
-
-    text-align:center;
-
-    color:#59667e;
-
-    font-size:12px;
-}
-
-
-/* =========================================================
-   MESSAGE
-========================================================= */
-
-.message{
-
-    position:fixed;
-
-    left:50%;
-    bottom:25px;
-
-    transform:
-        translate(-50%,20px);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    background:#f5f7fb;
-
-    color:#101725;
-
-    padding:
-        11px 17px;
-
-    border-radius:8px;
-
-    font-size:12px;
-
-    font-weight:600;
-
-    box-shadow:
-        0 12px 35px
-        rgba(0,0,0,.3);
-
-    transition:.25s;
-
-    z-index:300;
-}
-
-.message.show{
-
-    opacity:1;
-
-    transform:
-        translate(-50%,0);
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:900px){
-
-    .sidebar{
-        width:68px;
-    }
-
-    .menu-title,
-    .nav-text,
-    .sidebar-bottom{
-        display:none;
-    }
-
-    .nav button{
-        justify-content:center;
-    }
-
-    .main{
-        padding:17px;
-    }
-
-    .home-grid,
-    .portfolio-grid{
-        grid-template-columns:1fr;
-    }
-
-    .summary-grid{
-        grid-template-columns:1fr;
-    }
-
-}
-
-@media(max-width:600px){
-
-    .topbar{
-        padding:0 13px;
-    }
-
-    .market-status{
-        display:none;
-    }
-
-    .cash-box{
-        font-size:10px;
-    }
-
-    .cash-box strong{
-        font-size:11px;
-    }
-
-    .main{
-        padding:12px;
-    }
-
-    .page-title{
-        font-size:21px;
-    }
-
-    .stock{
-        grid-template-columns:
-            1.3fr 1fr 75px;
-    }
-
-    .portfolio-item{
-        grid-template-columns:
-            1.3fr 1fr;
-        gap:8px;
-    }
-
-}
-
-</style>
-</head>
-
-
-<body>
-
-
-<!-- =========================================================
-     TOPBAR
-========================================================= -->
-
-<header class="topbar">
-
-    <div class="logo">
-
-        <div class="logo-icon">
-            📈
-        </div>
-
-        <div>
-            INVEST <span>LAB</span>
-        </div>
-
-    </div>
-
-
-    <div class="top-right">
-
-        <div class="market-status">
-
-            <div class="status-dot"></div>
-
-            가상 시장 운영 중
-
-        </div>
-
-
-        <div class="cash-box">
-
-            현금
-
-            <strong id="topCash">
-                ₩1,000,000
-            </strong>
-
-        </div>
-
-    </div>
-
-</header>
-
-
-
-<div class="layout">
-
-
-<!-- =========================================================
-     SIDEBAR
-========================================================= -->
-
-<aside class="sidebar">
-
-    <div class="menu-title">
-        WORKSPACE
-    </div>
-
-
-    <nav class="nav">
-
-        <button
-            class="active"
-            onclick="showPage('home',this)"
-        >
-
-            <span class="nav-icon">⌂</span>
-
-            <span class="nav-text">
-                대시보드
-            </span>
-
-        </button>
-
-
-        <button
-            onclick="showPage('market',this)"
-        >
-
-            <span class="nav-icon">◈</span>
-
-            <span class="nav-text">
-                시장
-            </span>
-
-        </button>
-
-
-        <button
-            onclick="showPage('portfolio',this)"
-        >
-
-            <span class="nav-icon">▣</span>
-
-            <span class="nav-text">
-                내 자산
-            </span>
-
-        </button>
-
-
-        <button
-            onclick="showPage('history',this)"
-        >
-
-            <span class="nav-icon">≡</span>
-
-            <span class="nav-text">
-                거래내역
-            </span>
-
-        </button>
-
-    </nav>
-
-
-    <div class="sidebar-bottom">
-
-        <div class="sidebar-bottom-title">
-            PAPER MARKET
-        </div>
-
-        <div class="sidebar-bottom-text">
-
-            실제 돈을 사용하지 않는
-            가상 투자 환경입니다.
-
-        </div>
-
-    </div>
-
-</aside>
-
-
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
-<main class="main">
-
-
-<!-- =========================================================
-     HOME
-========================================================= -->
-
-<section
-    id="home"
-    class="page active"
->
-
-
-    <div class="page-header">
-
-        <div>
-
-            <div class="page-title">
-                대시보드
-            </div>
-
-            <div class="page-subtitle">
-                오늘의 시장과 내 투자 현황
-            </div>
-
-        </div>
-
-
-        <div
-            class="date-label"
-            id="currentDate"
-        ></div>
-
-    </div>
-
-
-
-    <!-- SUMMARY -->
-
-    <div class="summary-grid">
-
-
-        <div class="card summary">
-
-            <div class="summary-label">
-                총 자산
-            </div>
-
-            <div
-                class="summary-value"
-                id="homeAsset"
-            >
-                ₩1,000,000
-            </div>
-
-            <div
-                class="summary-change"
-                id="homeAssetChange"
-            >
-                시작 자산 대비 +0.00%
-            </div>
-
-        </div>
-
-
-
-        <div class="card summary">
-
-            <div class="summary-label">
-                보유 현금
-            </div>
-
-            <div
-                class="summary-value"
-                id="homeCash"
-            >
-                ₩1,000,000
-            </div>
-
-            <div class="summary-change">
-                즉시 주문 가능 금액
-            </div>
-
-        </div>
-
-
-
-        <div class="card summary">
-
-            <div class="summary-label">
-                주식 평가액
-            </div>
-
-            <div
-                class="summary-value"
-                id="homeStockValue"
-            >
-                ₩0
-            </div>
-
-            <div class="summary-change">
-                현재 보유 종목 기준
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- DAILY NEWS -->
-
-    <div
-        class="card daily-news"
-    >
-
-        <div class="daily-label">
-            TODAY'S MARKET
-        </div>
-
-        <div
-            class="daily-title"
-            id="dailyTitle"
-        >
-            시장을 분석하는 중...
-        </div>
-
-        <div
-            class="daily-description"
-            id="dailyDescription"
-        >
-            오늘의 주요 뉴스가 준비됩니다.
-        </div>
-
-        <div
-            class="daily-impact"
-            id="dailyImpact"
-        ></div>
-
-    </div>
-
-
-
-    <!-- MARKET -->
-
-    <div class="home-grid"
-         style="margin-top:16px;"
-    >
-
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div class="card-title">
-                    주요 종목
-                </div>
-
-                <div class="card-subtitle">
-                    LIVE
-                </div>
-
-            </div>
-
-
-            <div
-                class="stock-list"
-                id="homeStockList"
-            ></div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div class="card-title">
-                    오늘의 뉴스
-                </div>
-
-                <div class="card-subtitle">
-                    DAILY
-                </div>
-
-            </div>
-
-
-            <div
-                class="news-list"
-                id="homeNews"
-            ></div>
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =========================================================
-     MARKET
-========================================================= -->
-
-<section
-    id="market"
-    class="page"
->
-
-
-    <div class="page-header">
-
-        <div>
-
-            <div class="page-title">
-                시장
-            </div>
-
-            <div class="page-subtitle">
-                가상 종목의 실시간 가격을 확인하고 거래하세요.
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="home-grid">
-
-
-        <!-- STOCK LIST -->
-
-        <div class="card">
-
-            <div class="card-header">
-
-                <div class="card-title">
-                    전체 종목
-                </div>
-
-                <div class="card-subtitle">
-                    SIMULATED
-                </div>
-
-            </div>
-
-
-            <div
-                class="stock-list"
-                id="stockList"
-            ></div>
-
-        </div>
-
-
-
-        <!-- DETAIL -->
-
-        <div class="card detail">
-
-            <div class="detail-top">
-
-                <div>
-
-                    <div
-                        class="detail-name"
-                        id="detailName"
-                    >
-                        삼성전자
-                    </div>
-
-                    <div
-                        class="detail-code"
-                        id="detailCode"
-                    >
-                        005930
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="detail-price"
-                id="detailPrice"
-            >
-                ₩82,300
-            </div>
-
-
-            <div
-                class="detail-change"
-                id="detailChange"
-            >
-                +0.00%
-            </div>
-
-
-            <div class="chart">
-
-                <canvas
-                    id="chart"
-                ></canvas>
-
-            </div>
-
-
-            <!-- TRADE -->
-
-            <div class="trade-box">
-
-                <div class="trade-info">
-
-                    <span>
-                        주문 가능 현금
-                    </span>
-
-                    <span
-                        id="orderCash"
-                    >
-                        ₩1,000,000
-                    </span>
-
-                </div>
-
-
-                <input
-                    class="trade-input"
-                    id="quantity"
-                    type="number"
-                    min="1"
-                    value="1"
-                    placeholder="수량"
-                >
-
-
-                <div class="trade-buttons">
-
-                    <button
-                        class="buy"
-                        onclick="buyStock()"
-                    >
-                        매수
-                    </button>
-
-                    <button
-                        class="sell"
-                        onclick="sellStock()"
-                    >
-                        매도
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =========================================================
-     PORTFOLIO
-========================================================= -->
-
-<section
-    id="portfolio"
-    class="page"
->
-
-
-    <div class="page-header">
-
-        <div>
-
-            <div class="page-title">
-                내 자산
-            </div>
-
-            <div class="page-subtitle">
-                현재 보유 중인 가상 자산을 확인합니다.
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="summary-grid">
-
-        <div class="card summary">
-
-            <div class="summary-label">
-                총 자산
-            </div>
-
-            <div
-                class="summary-value"
-                id="portfolioAsset"
-            >
-                ₩1,000,000
-            </div>
-
-        </div>
-
-
-        <div class="card summary">
-
-            <div class="summary-label">
-                주식 평가액
-            </div>
-
-            <div
-                class="summary-value"
-                id="portfolioStockValue"
-            >
-                ₩0
-            </div>
-
-        </div>
-
-
-        <div class="card summary">
-
-            <div class="summary-label">
-                현금
-            </div>
-
-            <div
-                class="summary-value"
-                id="portfolioCash"
-            >
-                ₩1,000,000
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="card">
-
-        <div class="card-header">
-
-            <div class="card-title">
-                보유 종목
-            </div>
-
-        </div>
-
-
-        <div
-            class="portfolio-list"
-            id="portfolioList"
-        ></div>
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =========================================================
-     HISTORY
-========================================================= -->
-
-<section
-    id="history"
-    class="page"
->
-
-
-    <div class="page-header">
-
-        <div>
-
-            <div class="page-title">
-                거래내역
-            </div>
-
-            <div class="page-subtitle">
-                지금까지 실행한 모든 거래
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="card">
-
-        <div class="card-header">
-
-            <div class="card-title">
-                전체 거래
-            </div>
-
-        </div>
-
-
-        <div
-            class="history-list"
-            id="historyList"
-        ></div>
-
-    </div>
-
-
-</section>
-
-
-</main>
-
-</div>
-
-
-
-<div
-    class="message"
-    id="message"
-></div>
-
-
-
-<script>
-
-/* =========================================================
-   STOCKS
-========================================================= */
-
-const stocks = {
-
-    samsung:{
-        name:"삼성전자",
-        code:"005930",
-        price:82300,
-        startPrice:82300,
-        owned:0,
-        history:[
-            81700,
-            82000,
-            81900,
-            82500,
-            82300,
-            82700,
-            82300
-        ]
+const newsPool = [
+
+  {
+    title:"반도체 수요 전망이 예상보다 강하게 나타났습니다.",
+    description:
+      "글로벌 반도체 수요가 개선되면서 국내 반도체 기업에 대한 투자 심리가 움직이고 있습니다.",
+    impacts:{
+      samsung:1.8,
+      sk:2.5
     },
+    tags:[
+      "삼성전자 ▲1.8%",
+      "SK하이닉스 ▲2.5%",
+      "반도체 ↑"
+    ]
+  },
 
-    sk:{
-        name:"SK하이닉스",
-        code:"000660",
-        price:214500,
-        startPrice:214500,
-        owned:0,
-        history:[
-            211000,
-            213000,
-            212500,
-            216000,
-            215000,
-            216500,
-            214500
-        ]
+  {
+    title:"인터넷 플랫폼 성장 기대감이 커지고 있습니다.",
+    description:
+      "온라인 광고와 플랫폼 서비스 성장 전망이 개선되면서 관련 종목에 관심이 집중되고 있습니다.",
+    impacts:{
+      naver:2.2,
+      kakao:1.5
     },
+    tags:[
+      "NAVER ▲2.2%",
+      "카카오 ▲1.5%",
+      "플랫폼 ↑"
+    ]
+  },
 
-    naver:{
-        name:"NAVER",
-        code:"035420",
-        price:246000,
-        startPrice:246000,
-        owned:0,
-        history:[
-            242000,
-            244000,
-            243000,
-            247000,
-            249000,
-            247000,
-            246000
-        ]
+  {
+    title:"자동차 수출 전망이 개선되었습니다.",
+    description:
+      "주요 시장의 자동차 수요가 회복될 것으로 예상되면서 자동차 업종에 대한 기대감이 높아졌습니다.",
+    impacts:{
+      hyundai:2.4
     },
+    tags:[
+      "현대자동차 ▲2.4%",
+      "자동차 ↑"
+    ]
+  },
 
-    kakao:{
-        name:"카카오",
-        code:"035720",
-        price:54200,
-        startPrice:54200,
-        owned:0,
-        history:[
-            55100,
-            54800,
-            54400,
-            53900,
-            53700,
-            54100,
-            54200
-        ]
+  {
+    title:"2차전지 시장의 변동성이 확대되고 있습니다.",
+    description:
+      "배터리 산업의 단기 전망에 대한 불확실성이 커지며 관련 종목의 움직임이 나타났습니다.",
+    impacts:{
+      lg:-1.8
     },
-
-    hyundai:{
-        name:"현대차",
-        code:"005380",
-        price:198000,
-        startPrice:198000,
-        owned:0,
-        history:[
-            195000,
-            197000,
-            196500,
-            199000,
-            201000,
-            199000,
-            198000
-        ]
-    },
-
-    lg:{
-        name:"LG에너지솔루션",
-        code:"373220",
-        price:389000,
-        startPrice:389000,
-        owned:0,
-        history:[
-            382000,
-            385000,
-            388000,
-            391000,
-            394000,
-            390000,
-            389000
-        ]
-    }
-
-};
-
-
-/* =========================================================
-   PLAYER DATA
-========================================================= */
-
-let cash = 1000000;
-
-let selected = "samsung";
-
-let tradeHistory = [];
-
-
-/* =========================================================
-   DAILY NEWS
-========================================================= */
-
-const dailyNewsSets = [
-
-    {
-
-        title:
-            "반도체 수요가 예상보다 강한 흐름을 보이고 있습니다.",
-
-        description:
-            "글로벌 반도체 시장의 수요 증가 전망이 나오면서 관련 기업에 대한 투자자들의 관심이 높아지고 있습니다.",
-
-        news:[
-
-            {
-                title:
-                    "반도체 수요 증가 전망",
-
-                text:
-                    "메모리 반도체 시장의 회복 기대가 높아졌습니다.",
-
-                impact:
-                    "삼성전자 · SK하이닉스 ▲"
-            },
-
-            {
-                title:
-                    "IT 부품 주문 증가",
-
-                text:
-                    "전자 부품 업체들의 주문량이 증가하고 있습니다.",
-
-                impact:
-                    "삼성전자 ▲"
-            },
-
-            {
-                title:
-                    "외국인 투자 관심 확대",
-
-                text:
-                    "대형 반도체 기업에 대한 투자 관심이 증가했습니다.",
-
-                impact:
-                    "반도체 ▲"
-            }
-
-        ],
-
-        effects:{
-
-            samsung:0.018,
-            sk:0.025
-
-        }
-
-    },
-
-
-    {
-
-        title:
-            "인터넷 플랫폼 업종에 새로운 성장 기대가 나타났습니다.",
-
-        description:
-            "온라인 서비스 시장의 성장 전망과 신규 서비스 출시 소식이 투자 심리에 영향을 주고 있습니다.",
-
-        news:[
-
-            {
-                title:
-                    "플랫폼 산업 성장 전망",
-
-                text:
-                    "온라인 플랫폼 이용량 증가가 예상되고 있습니다.",
-
-                impact:
-                    "NAVER · 카카오 ▲"
-            },
-
-            {
-                title:
-                    "신규 서비스 출시 기대",
-
-                text:
-                    "주요 플랫폼 기업의 새로운 서비스가 공개될 예정입니다.",
-
-                impact:
-                    "NAVER ▲"
-            },
-
-            {
-                title:
-                    "인터넷 광고 시장 회복",
-
-                text:
-                    "온라인 광고 시장이 점진적으로 회복되고 있습니다.",
-
-                impact:
-                    "플랫폼 ▲"
-            }
-
-        ],
-
-        effects:{
-
-            naver:0.022,
-            kakao:0.015
-
-        }
-
-    },
-
-
-    {
-
-        title:
-            "자동차 산업의 수출 전망이 개선되고 있습니다.",
-
-        description:
-            "주요 자동차 기업의 해외 판매 증가 기대가 높아지면서 관련 종목에 변화가 나타나고 있습니다.",
-
-        news:[
-
-            {
-                title:
-                    "자동차 수출 증가 전망",
-
-                text:
-                    "해외 자동차 시장의 수요 증가가 예상됩니다.",
-
-                impact:
-                    "현대차 ▲"
-            },
-
-            {
-                title:
-                    "친환경 차량 관심 확대",
-
-                text:
-                    "전기차와 친환경 차량에 대한 관심이 높아졌습니다.",
-
-                impact:
-                    "자동차 업종 ▲"
-            },
-
-            {
-                title:
-                    "신차 출시 기대",
-
-                text:
-                    "주요 자동차 기업의 신차 공개가 예정되어 있습니다.",
-
-                impact:
-                    "현대차 ▲"
-            }
-
-        ],
-
-        effects:{
-
-            hyundai:0.024
-
-        }
-
-    },
-
-
-    {
-
-        title:
-            "2차전지 시장의 변동성이 확대되고 있습니다.",
-
-        description:
-            "배터리 산업을 둘러싼 투자 심리가 빠르게 변하면서 관련 종목의 가격 움직임도 커지고 있습니다.",
-
-        news:[
-
-            {
-                title:
-                    "배터리 원재료 가격 변화",
-
-                text:
-                    "배터리 생산 비용에 영향을 주는 원재료 가격이 움직였습니다.",
-
-                impact:
-                    "LG에너지솔루션 변동"
-            },
-
-            {
-                title:
-                    "전기차 시장 전망 변화",
-
-                text:
-                    "전기차 시장의 성장 전망에 대한 의견이 엇갈리고 있습니다.",
-
-                impact:
-                    "2차전지 변동"
-            },
-
-            {
-                title:
-                    "배터리 기술 경쟁 심화",
-
-                text:
-                    "글로벌 배터리 기업들의 기술 경쟁이 계속되고 있습니다.",
-
-                impact:
-                    "LG에너지솔루션 변동"
-            }
-
-        ],
-
-        effects:{
-
-            lg:-0.018
-
-        }
-
-    },
-
-
-    {
-
-        title:
-            "시장 전반에서 투자자들의 관망세가 나타나고 있습니다.",
-
-        description:
-            "특별한 대형 이슈가 없는 가운데 주요 종목의 가격 움직임이 제한되고 있습니다.",
-
-        news:[
-
-            {
-                title:
-                    "시장 관망세",
-
-                text:
-                    "주요 투자자들이 새로운 재료를 기다리고 있습니다.",
-
-                impact:
-                    "시장 보합"
-            },
-
-            {
-                title:
-                    "거래량 감소",
-
-                text:
-                    "전체적인 거래량이 평소보다 감소했습니다.",
-
-                impact:
-                    "시장 보합"
-            },
-
-            {
-                title:
-                    "투자 심리 안정",
-
-                text:
-                    "시장 변동성이 비교적 낮은 수준을 유지하고 있습니다.",
-
-                impact:
-                    "시장 안정"
-            }
-
-        ],
-
-        effects:{}
-
-    }
+    tags:[
+      "LG에너지솔루션 ▼1.8%",
+      "배터리 ↓"
+    ]
+  },
+
+  {
+    title:"시장 전체가 관망세를 보이고 있습니다.",
+    description:
+      "뚜렷한 방향성이 나타나지 않으면서 주요 종목들이 제한적인 움직임을 보이고 있습니다.",
+    impacts:{},
+    tags:[
+      "시장 보합",
+      "관망세"
+    ]
+  }
 
 ];
 
 
 /* =========================================================
-   DAILY NEWS STATE
+   LOCAL STORAGE
 ========================================================= */
 
-let dailyState = {
+function saveData(){
 
-    date:"",
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      cash,
+      stocks,
+      tradeHistory,
+      dailyNews,
+      previousDate,
+      candles
+    })
+  );
 
-    index:0,
+}
 
-    news:[]
 
-};
+function loadData(){
+
+  const saved =
+    localStorage.getItem(STORAGE_KEY);
+
+  if(!saved) return;
+
+  try{
+
+    const data = JSON.parse(saved);
+
+    cash =
+      typeof data.cash === "number"
+        ? data.cash
+        : INITIAL_CASH;
+
+    stocks =
+      data.stocks || stocks;
+
+    tradeHistory =
+      data.tradeHistory || [];
+
+    dailyNews =
+      data.dailyNews || null;
+
+    previousDate =
+      data.previousDate || null;
+
+    candles =
+      data.candles || {};
+
+  }catch(e){
+
+    console.log("저장 데이터 로드 실패");
+
+  }
+
+}
 
 
 /* =========================================================
-   DATE
+   DATE / TIME
 ========================================================= */
 
 function getDateKey(){
 
-    const now = new Date();
+  const d = new Date();
 
-    return (
-        now.getFullYear()
-        + "-"
-        + String(
-            now.getMonth()+1
-        ).padStart(2,"0")
-        + "-"
-        + String(
-            now.getDate()
-        ).padStart(2,"0")
-    );
+  return [
+    d.getFullYear(),
+    String(d.getMonth()+1).padStart(2,"0"),
+    String(d.getDate()).padStart(2,"0")
+  ].join("-");
+
+}
+
+
+function getCurrentTime(){
+
+  const d = new Date();
+
+  return {
+    hour:d.getHours(),
+    minute:d.getMinutes(),
+    second:d.getSeconds()
+  };
 
 }
 
 
 /* =========================================================
-   CREATE DAILY NEWS
+   MARKET HOURS
+   09:00 ~ 15:30
 ========================================================= */
 
-function generateDailyNews(){
+function isMarketOpen(){
 
-    const today =
-        getDateKey();
+  const t = getCurrentTime();
 
-    if(
-        dailyState.date === today &&
-        dailyState.news.length
-    ){
+  const now =
+    t.hour * 60 + t.minute;
 
-        return;
+  const open =
+    9 * 60;
 
-    }
+  const close =
+    15 * 60 + 30;
 
+  return now >= open && now < close;
 
-    let index =
-        Math.floor(
-            Math.random()
-            *
-            dailyNewsSets.length
-        );
+}
 
 
-    /*
-     * 전날과 같은 뉴스 방지
-     */
+function getMarketStatus(){
 
-    if(
-        dailyState.index === index &&
-        dailyNewsSets.length > 1
-    ){
+  const t = getCurrentTime();
 
-        index =
-            (index + 1)
-            %
-            dailyNewsSets.length;
+  const total =
+    t.hour * 60 + t.minute;
 
-    }
+  const open = 9 * 60;
+  const close = 15 * 60 + 30;
 
+  if(total < open){
 
-    const set =
-        dailyNewsSets[index];
-
-
-    dailyState = {
-
-        date:today,
-
-        index:index,
-
-        news:set.news
-
+    return {
+      open:false,
+      text:"장 시작 전"
     };
 
+  }
 
-    /*
-     * 뉴스에 따른 가격 변화
-     */
+  if(total >= close){
 
-    for(
-        const key in set.effects
-    ){
+    return {
+      open:false,
+      text:"장 마감"
+    };
 
-        const stock =
-            stocks[key];
+  }
 
-        const effect =
-            set.effects[key];
-
-
-        stock.price *=
-            (1 + effect);
-
-
-        stock.price =
-            Math.round(
-                stock.price / 100
-            ) * 100;
-
-
-        stock.history.push(
-            stock.price
-        );
-
-
-        if(
-            stock.history.length > 30
-        ){
-
-            stock.history.shift();
-
-        }
-
-    }
-
-
-    save();
+  return {
+    open:true,
+    text:"장 운영 중"
+  };
 
 }
 
 
 /* =========================================================
-   STORAGE
-========================================================= */
-
-function save(){
-
-    localStorage.setItem(
-        "investLabAlpha03",
-
-        JSON.stringify({
-
-            cash,
-
-            stocks,
-
-            tradeHistory,
-
-            dailyState
-
-        })
-    );
-
-}
-
-
-function load(){
-
-    const saved =
-        localStorage.getItem(
-            "investLabAlpha03"
-        );
-
-
-    if(!saved){
-
-        generateDailyNews();
-
-        return;
-
-    }
-
-
-    try{
-
-        const data =
-            JSON.parse(saved);
-
-
-        cash =
-            data.cash ?? 1000000;
-
-
-        tradeHistory =
-            data.tradeHistory ?? [];
-
-
-        dailyState =
-            data.dailyState ?? {
-                date:"",
-                index:0,
-                news:[]
-            };
-
-
-        if(data.stocks){
-
-            for(
-                const key in stocks
-            ){
-
-                if(
-                    data.stocks[key]
-                ){
-
-                    stocks[key].price =
-                        data.stocks[key].price;
-
-                    stocks[key].history =
-                        data.stocks[key].history
-                        ||
-                        stocks[key].history;
-
-                    stocks[key].owned =
-                        data.stocks[key].owned
-                        ||
-                        0;
-
-                }
-
-            }
-
-        }
-
-
-        /*
-         * 날짜가 바뀌었으면
-         * 새 뉴스 생성
-         */
-
-        generateDailyNews();
-
-
-    }catch(error){
-
-        console.log(
-            "데이터 로딩 실패",
-            error
-        );
-
-        generateDailyNews();
-
-    }
-
-}
-
-
-/* =========================================================
-   MONEY
+   FORMAT
 ========================================================= */
 
 function money(value){
 
-    return "₩"
-        +
-        Math.round(value)
-        .toLocaleString(
-            "ko-KR"
-        );
+  return "₩" +
+    Math.round(value)
+      .toLocaleString("ko-KR");
 
 }
 
 
-/* =========================================================
-   PAGE
-========================================================= */
+function percent(value){
 
-function showPage(
-    page,
-    button
-){
+  if(value > 0){
+    return "▲ +" + value.toFixed(2) + "%";
+  }
 
-    document
-        .querySelectorAll(
-            ".page"
-        )
-        .forEach(
-            p=>{
-                p.classList.remove(
-                    "active"
-                );
-            }
-        );
+  if(value < 0){
+    return "▼ " + value.toFixed(2) + "%";
+  }
+
+  return "— 0.00%";
+
+}
 
 
-    document
-        .getElementById(page)
-        .classList.add(
-            "active"
-        );
+function changeClass(value){
 
+  if(value > 0) return "up";
 
-    document
-        .querySelectorAll(
-            ".nav button"
-        )
-        .forEach(
-            b=>{
-                b.classList.remove(
-                    "active"
-                );
-            }
-        );
+  if(value < 0) return "down";
 
-
-    button.classList.add(
-        "active"
-    );
-
-
-    if(page === "market"){
-
-        setTimeout(
-            drawChart,
-            30
-        );
-
-    }
+  return "neutral";
 
 }
 
@@ -2699,1177 +1577,419 @@ function showPage(
    STOCK CHANGE
 ========================================================= */
 
-function stockChange(
-    stock
-){
+function getChange(stock){
 
-    return (
-        (
-            stock.price
-            -
-            stock.startPrice
-        )
-        /
-        stock.startPrice
-    )
-    * 100;
+  return (
+    (stock.price - stock.startPrice) /
+    stock.startPrice
+  ) * 100;
 
 }
 
 
 /* =========================================================
-   STOCK LIST
+   CANDLE SYSTEM
 ========================================================= */
 
-function renderStocks(){
+function createInitialCandles(){
 
-    const containers = [
+  Object.entries(stocks).forEach(([key,stock])=>{
 
-        document.getElementById(
-            "stockList"
-        ),
+    if(candles[key]) return;
 
-        document.getElementById(
-            "homeStockList"
-        )
+    candles[key] = [];
 
+    let base = stock.price;
+
+    for(let i=0;i<160;i++){
+
+      const open = base;
+
+      const move =
+        (Math.random()-.5)*.018;
+
+      const close =
+        open * (1+move);
+
+      const high =
+        Math.max(open,close) *
+        (1+Math.random()*.007);
+
+      const low =
+        Math.min(open,close) *
+        (1-Math.random()*.007);
+
+      candles[key].push({
+        open,
+        close,
+        high,
+        low
+      });
+
+      base = close;
+
+    }
+
+    candles[key][candles[key].length-1].close =
+      stock.price;
+
+  });
+
+}
+
+
+function addCandle(key){
+
+  const stock = stocks[key];
+
+  if(!candles[key]){
+    candles[key] = [];
+  }
+
+  const last =
+    candles[key][candles[key].length-1];
+
+  const open =
+    last ? last.close : stock.price;
+
+  const close =
+    stock.price;
+
+  const high =
+    Math.max(open,close) *
+    (1 + Math.random()*.003);
+
+  const low =
+    Math.min(open,close) *
+    (1 - Math.random()*.003);
+
+  candles[key].push({
+    open,
+    close,
+    high,
+    low
+  });
+
+  if(candles[key].length > 200){
+    candles[key].shift();
+  }
+
+}
+
+
+/* =========================================================
+   DAILY NEWS
+========================================================= */
+
+function generateDailyNews(){
+
+  const today = getDateKey();
+
+  if(
+    previousDate === today &&
+    dailyNews
+  ){
+    return;
+  }
+
+  let candidates =
+    [...newsPool];
+
+  if(dailyNews){
+
+    candidates =
+      candidates.filter(
+        n => n.title !== dailyNews.title
+      );
+
+  }
+
+  const news =
+    candidates[
+      Math.floor(
+        Math.random()*candidates.length
+      )
     ];
 
+  dailyNews = news;
 
-    containers.forEach(
-        container=>{
+  previousDate = today;
 
-            if(!container){
-                return;
-            }
+  Object.entries(news.impacts)
+    .forEach(([key,percentValue])=>{
 
+      if(!stocks[key]) return;
 
-            container.innerHTML = "";
-
-
-            for(
-                const key in stocks
-            ){
-
-                const stock =
-                    stocks[key];
-
-
-                const change =
-                    stockChange(
-                        stock
-                    );
-
-
-                const className =
-                    change > 0
-                    ? "up"
-                    : change < 0
-                    ? "down"
-                    : "neutral";
-
-
-                const sign =
-                    change > 0
-                    ? "+"
-                    : "";
-
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className =
-                    "stock";
-
-
-                div.onclick =
-                    ()=>{
-
-                        selected =
-                            key;
-
-                        renderDetail();
-
-                        showMarketFromStock();
-
-                    };
-
-
-                div.innerHTML = `
-
-                    <div>
-
-                        <div class="stock-name">
-                            ${stock.name}
-                        </div>
-
-                        <div class="stock-code">
-                            ${stock.code}
-                        </div>
-
-                    </div>
-
-
-                    <div class="stock-price">
-
-                        ${money(
-                            stock.price
-                        )}
-
-                    </div>
-
-
-                    <div
-                        class="
-                            stock-change
-                            ${className}
-                        "
-                    >
-
-                        ${
-                            sign
-                        }${change.toFixed(2)}%
-
-                    </div>
-
-                `;
-
-
-                container.appendChild(
-                    div
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   GO MARKET
-========================================================= */
-
-function showMarketFromStock(){
-
-    document
-        .querySelectorAll(
-            ".page"
-        )
-        .forEach(
-            p=>{
-                p.classList.remove(
-                    "active"
-                );
-            }
-        );
-
-
-    document
-        .getElementById(
-            "market"
-        )
-        .classList.add(
-            "active"
-        );
-
-
-    document
-        .querySelectorAll(
-            ".nav button"
-        )
-        .forEach(
-            b=>{
-                b.classList.remove(
-                    "active"
-                );
-            }
-        );
-
-
-    document
-        .querySelectorAll(
-            ".nav button"
-        )[1]
-        .classList.add(
-            "active"
-        );
-
-
-    setTimeout(
-        drawChart,
-        20
-    );
-
-}
-
-
-/* =========================================================
-   DETAIL
-========================================================= */
-
-function renderDetail(){
-
-    const stock =
-        stocks[selected];
-
-
-    const change =
-        stockChange(
-            stock
-        );
-
-
-    const sign =
-        change > 0
-        ? "+"
-        : "";
-
-
-    document
-        .getElementById(
-            "detailName"
-        )
-        .textContent =
-        stock.name;
-
-
-    document
-        .getElementById(
-            "detailCode"
-        )
-        .textContent =
-        stock.code;
-
-
-    document
-        .getElementById(
-            "detailPrice"
-        )
-        .textContent =
-        money(
-            stock.price
-        );
-
-
-    const changeElement =
-        document
-        .getElementById(
-            "detailChange"
-        );
-
-
-    changeElement.textContent =
-        sign
-        +
-        change.toFixed(2)
-        +
-        "%";
-
-
-    changeElement.className =
-        "detail-change "
-        +
-        (
-            change > 0
-            ? "up"
-            : change < 0
-            ? "down"
-            : "neutral"
-        );
-
-
-    document
-        .getElementById(
-            "orderCash"
-        )
-        .textContent =
-        money(cash);
-
-
-    drawChart();
-
-}
-
-
-/* =========================================================
-   CHART
-========================================================= */
-
-function drawChart(){
-
-    const canvas =
-        document.getElementById(
-            "chart"
-        );
-
-
-    if(!canvas){
-        return;
-    }
-
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-
-    if(rect.width <= 0){
-        return;
-    }
-
-
-    const dpr =
-        window.devicePixelRatio
-        || 1;
-
-
-    canvas.width =
-        rect.width * dpr;
-
-
-    canvas.height =
-        rect.height * dpr;
-
-
-    const ctx =
-        canvas.getContext(
-            "2d"
-        );
-
-
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-
-    const width =
-        rect.width;
-
-
-    const height =
-        rect.height;
-
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    const values =
-        stocks[
-            selected
-        ].history;
-
-
-    const min =
-        Math.min(
-            ...values
-        );
-
-
-    const max =
+      stocks[key].price =
         Math.max(
-            ...values
+          100,
+          Math.round(
+            stocks[key].price *
+            (1+percentValue/100) /
+            100
+          )*100
         );
 
+      stocks[key].startPrice =
+        stocks[key].price;
 
-    const range =
-        max - min
-        || 1;
+      addCandle(key);
 
+    });
 
-    /*
-     * GRID
-     */
-
-    ctx.strokeStyle =
-        "rgba(255,255,255,.045)";
-
-    ctx.lineWidth = 1;
-
-
-    for(
-        let i=1;
-        i<5;
-        i++
-    ){
-
-        const y =
-            (
-                height / 5
-            )
-            * i;
-
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            0,
-            y
-        );
-
-        ctx.lineTo(
-            width,
-            y
-        );
-
-        ctx.stroke();
-
-    }
-
-
-    /*
-     * LINE
-     */
-
-    const points = [];
-
-
-    values.forEach(
-        (value,index)=>{
-
-            const x =
-                14
-                +
-                (
-                    index
-                    /
-                    (
-                        values.length
-                        - 1
-                    )
-                )
-                *
-                (
-                    width - 28
-                );
-
-
-            const y =
-                height
-                -
-                (
-                    (
-                        value - min
-                    )
-                    /
-                    range
-                )
-                *
-                (
-                    height - 30
-                )
-                -
-                15;
-
-
-            points.push({
-                x,
-                y
-            });
-
-        }
-    );
-
-
-    /*
-     * GRADIENT FILL
-     */
-
-    const gradient =
-        ctx.createLinearGradient(
-            0,
-            0,
-            0,
-            height
-        );
-
-
-    gradient.addColorStop(
-        0,
-        "rgba(73,155,255,.18)"
-    );
-
-
-    gradient.addColorStop(
-        1,
-        "rgba(73,155,255,0)"
-    );
-
-
-    ctx.beginPath();
-
-
-    points.forEach(
-        (p,index)=>{
-
-            if(index === 0){
-
-                ctx.moveTo(
-                    p.x,
-                    p.y
-                );
-
-            }else{
-
-                ctx.lineTo(
-                    p.x,
-                    p.y
-                );
-
-            }
-
-        }
-    );
-
-
-    ctx.lineTo(
-        points[
-            points.length-1
-        ].x,
-        height
-    );
-
-
-    ctx.lineTo(
-        points[0].x,
-        height
-    );
-
-
-    ctx.closePath();
-
-
-    ctx.fillStyle =
-        gradient;
-
-    ctx.fill();
-
-
-    /*
-     * LINE
-     */
-
-    ctx.beginPath();
-
-
-    points.forEach(
-        (p,index)=>{
-
-            if(index === 0){
-
-                ctx.moveTo(
-                    p.x,
-                    p.y
-                );
-
-            }else{
-
-                ctx.lineTo(
-                    p.x,
-                    p.y
-                );
-
-            }
-
-        }
-    );
-
-
-    const last =
-        values[
-            values.length-1
-        ];
-
-
-    const first =
-        values[0];
-
-
-    ctx.strokeStyle =
-        last >= first
-        ? "#ff5c76"
-        : "#4d9dff";
-
-
-    ctx.lineWidth = 2.5;
-
-    ctx.stroke();
-
-
-    /*
-     * CURRENT POINT
-     */
-
-    const lastPoint =
-        points[
-            points.length-1
-        ];
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-        lastPoint.x,
-        lastPoint.y,
-        4,
-        0,
-        Math.PI * 2
-    );
-
-
-    ctx.fillStyle =
-        ctx.strokeStyle;
-
-    ctx.fill();
+  saveData();
 
 }
 
 
 /* =========================================================
-   BUY
+   MARKET MOVEMENT
 ========================================================= */
 
-function buyStock(){
+function updateMarket(){
 
-    const quantity =
-        parseInt(
-            document
-            .getElementById(
-                "quantity"
-            )
-            .value
+  if(!isMarketOpen()){
+    return;
+  }
+
+  Object.entries(stocks)
+    .forEach(([key,stock])=>{
+
+      const movement =
+        (Math.random()-.5)*.004;
+
+      stock.price =
+        Math.max(
+          100,
+          Math.round(
+            stock.price *
+            (1+movement) /
+            100
+          )*100
         );
 
-
-    if(
-        !quantity
-        ||
-        quantity <= 0
-    ){
-
-        showMessage(
-            "수량을 입력하세요."
+      stock.volume +=
+        Math.floor(
+          Math.random()*5000
         );
 
-        return;
+      addCandle(key);
 
-    }
+    });
 
+  saveData();
 
-    const stock =
-        stocks[selected];
+  renderAll();
 
-
-    const total =
-        stock.price
-        *
-        quantity;
+}
 
 
-    if(
-        total > cash
-    ){
+/* =========================================================
+   MARKET UI
+========================================================= */
 
-        showMessage(
-            "현금이 부족합니다."
-        );
+function updateMarketStatus(){
 
-        return;
+  const status =
+    getMarketStatus();
 
-    }
+  const pill =
+    document.getElementById("marketPill");
+
+  const side =
+    document.getElementById("sideMarketStatus");
+
+  const clock =
+    document.getElementById("marketClock");
+
+  const t =
+    getCurrentTime();
+
+  clock.textContent =
+    `${String(t.hour).padStart(2,"0")}:` +
+    `${String(t.minute).padStart(2,"0")}:` +
+    `${String(t.second).padStart(2,"0")}`;
+
+  if(status.open){
+
+    pill.textContent =
+      "● MARKET OPEN";
+
+    pill.classList.remove("closed");
+
+    side.textContent =
+      "● SIMULATION LIVE";
+
+  }else{
+
+    pill.textContent =
+      "● MARKET CLOSED";
+
+    pill.classList.add("closed");
+
+    side.textContent =
+      "● MARKET CLOSED";
+
+  }
+
+  const disabled =
+    !status.open;
+
+  const buy =
+    document.getElementById("buyButton");
+
+  const sell =
+    document.getElementById("sellButton");
+
+  if(buy) buy.disabled = disabled;
+  if(sell) sell.disabled = disabled;
+
+}
 
 
-    cash -= total;
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-    stock.owned += quantity;
+function showPage(page,button){
+
+  document.querySelectorAll(".page")
+    .forEach(p =>
+      p.classList.remove("active")
+    );
+
+  document.getElementById(page)
+    .classList.add("active");
+
+  document.querySelectorAll(".nav button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+  renderAll();
+
+}
 
 
-    tradeHistory.unshift({
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
-        type:"매수",
+function renderDashboard(){
 
-        name:stock.name,
+  if(dailyNews){
 
-        quantity,
+    document.getElementById("mainNewsTitle")
+      .textContent =
+        dailyNews.title;
 
-        price:stock.price,
+    document.getElementById("mainNewsDescription")
+      .textContent =
+        dailyNews.description;
 
-        time:
-            new Date()
-            .toLocaleString(
-                "ko-KR"
-            )
+  }
+
+  document.getElementById("newsDate")
+    .textContent =
+      getDateKey();
+
+
+  const impact =
+    document.getElementById("newsImpact");
+
+  impact.innerHTML = "";
+
+  if(dailyNews){
+
+    dailyNews.tags.forEach(tag=>{
+
+      const el =
+        document.createElement("div");
+
+      el.className = "impact";
+
+      el.textContent = tag;
+
+      impact.appendChild(el);
+
+    });
+
+  }
+
+
+  const list =
+    document.getElementById("newsList");
+
+  list.innerHTML = "";
+
+  newsPool.forEach((news,index)=>{
+
+    const item =
+      document.createElement("div");
+
+    item.className = "news-item";
+
+    item.innerHTML = `
+      <strong>${news.title}</strong>
+      <span>
+        ${news === dailyNews
+          ? "TODAY · 주요 뉴스"
+          : "시장 분석"}
+      </span>
+    `;
+
+    item.onclick = () =>
+      openNews(news);
+
+    list.appendChild(item);
+
+  });
+
+
+  const dashboardStocks =
+    document.getElementById("dashboardStocks");
+
+  dashboardStocks.innerHTML = "";
+
+
+  Object.values(stocks)
+    .forEach(stock=>{
+
+      const change =
+        getChange(stock);
+
+      const row =
+        document.createElement("div");
+
+      row.className = "stock-row";
+
+      row.innerHTML = `
+        <div class="stock-name">
+          <strong>${stock.name}</strong>
+          <span>${stock.code}</span>
+        </div>
+
+        <div class="stock-price">
+          ${money(stock.price)}
+        </div>
+
+        <div class="stock-change ${changeClass(change)}">
+          ${percent(change)}
+        </div>
+
+        <div class="volume">
+          거래량 ${stock.volume.toLocaleString()}
+        </div>
+      `;
+
+      dashboardStocks.appendChild(row);
 
     });
 
 
-    tradeHistory =
-        tradeHistory.slice(
-            0,
-            100
-        );
-
-
-    save();
-
-    renderAll();
-
-
-    showMessage(
-        `${stock.name} ${quantity}주 매수`
-    );
-
-}
-
-
-/* =========================================================
-   SELL
-========================================================= */
-
-function sellStock(){
-
-    const quantity =
-        parseInt(
-            document
-            .getElementById(
-                "quantity"
-            )
-            .value
-        );
-
-
-    if(
-        !quantity
-        ||
-        quantity <= 0
-    ){
-
-        showMessage(
-            "수량을 입력하세요."
-        );
-
-        return;
-
-    }
-
-
-    const stock =
-        stocks[selected];
-
-
-    if(
-        stock.owned
-        <
-        quantity
-    ){
-
-        showMessage(
-            "보유 수량이 부족합니다."
-        );
-
-        return;
-
-    }
-
-
-    const total =
-        stock.price
-        *
-        quantity;
-
-
-    cash += total;
-
-    stock.owned -= quantity;
-
-
-    tradeHistory.unshift({
-
-        type:"매도",
-
-        name:stock.name,
-
-        quantity,
-
-        price:stock.price,
-
-        time:
-            new Date()
-            .toLocaleString(
-                "ko-KR"
-            )
-
-    });
-
-
-    tradeHistory =
-        tradeHistory.slice(
-            0,
-            100
-        );
-
-
-    save();
-
-    renderAll();
-
-
-    showMessage(
-        `${stock.name} ${quantity}주 매도`
-    );
-
-}
-
-
-/* =========================================================
-   ASSETS
-========================================================= */
-
-function getStockValue(){
-
-    let total = 0;
-
-
-    for(
-        const key in stocks
-    ){
-
-        total +=
-            stocks[key].price
-            *
-            stocks[key].owned;
-
-    }
-
-
-    return total;
-
-}
-
-
-function getTotalAsset(){
-
-    return (
-        cash
-        +
-        getStockValue()
-    );
-
-}
-
-
-/* =========================================================
-   DAILY NEWS RENDER
-========================================================= */
-
-function renderDailyNews(){
-
-    const set =
-        dailyNewsSets[
-            dailyState.index
-        ];
-
-
-    if(!set){
-        return;
-    }
-
-
-    document
-        .getElementById(
-            "dailyTitle"
-        )
-        .textContent =
-        set.title;
-
-
-    document
-        .getElementById(
-            "dailyDescription"
-        )
-        .textContent =
-        set.description;
-
-
-    const impact =
-        document
-        .getElementById(
-            "dailyImpact"
-        );
-
-
-    impact.innerHTML = "";
-
-
-    for(
-        const key in set.effects
-    ){
-
-        const stock =
-            stocks[key];
-
-
-        const effect =
-            set.effects[key];
-
-
-        const tag =
-            document.createElement(
-                "div"
-            );
-
-
-        tag.className =
-            "impact-tag";
-
-
-        tag.textContent =
-            stock.name
-            +
-            " "
-            +
-            (
-                effect >= 0
-                ? "▲"
-                : "▼"
-            )
-            +
-            " "
-            +
-            Math.abs(
-                effect * 100
-            ).toFixed(1)
-            +
-            "%";
-
-
-        impact.appendChild(
-            tag
-        );
-
-    }
-
-
-    if(
-        Object.keys(
-            set.effects
-        ).length === 0
-    ){
-
-        impact.innerHTML = `
-            <div class="impact-tag">
-                시장 영향 제한적
-            </div>
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   NEWS LIST
-========================================================= */
-
-function renderNews(){
-
-    const set =
-        dailyNewsSets[
-            dailyState.index
-        ];
-
-
-    const container =
-        document.getElementById(
-            "homeNews"
-        );
-
-
-    container.innerHTML = "";
-
-
-    set.news.forEach(
-        (item,index)=>{
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "news-item";
-
-
-            div.innerHTML = `
-
-                <div class="news-top">
-
-                    <div class="news-title">
-                        ${item.title}
-                    </div>
-
-                    <div class="news-time">
-                        ${
-                            String(
-                                9 + index * 3
-                            ).padStart(2,"0")
-                        }:00
-                    </div>
-
-                </div>
-
-
-                <div class="news-text">
-                    ${item.text}
-                </div>
-
-
-                <div class="news-impact">
-                    ${item.impact}
-                </div>
-
-            `;
-
-
-            container.appendChild(
-                div
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-function renderHome(){
-
-    const total =
-        getTotalAsset();
-
-
-    const stockValue =
-        getStockValue();
-
-
-    const profit =
-        total
-        -
-        1000000;
-
-
-    const rate =
-        (
-            profit
-            /
-            1000000
-        )
-        *
-        100;
-
-
-    document
-        .getElementById(
-            "homeAsset"
-        )
-        .textContent =
-        money(total);
-
-
-    document
-        .getElementById(
-            "homeCash"
-        )
-        .textContent =
-        money(cash);
-
-
-    document
-        .getElementById(
-            "homeStockValue"
-        )
-        .textContent =
-        money(stockValue);
-
-
-    const change =
-        document
-        .getElementById(
-            "homeAssetChange"
-        );
-
-
-    change.textContent =
-        "시작 자산 대비 "
-        +
-        (
-            profit >= 0
-            ? "+"
-            : ""
-        )
-        +
-        rate.toFixed(2)
-        +
-        "%";
-
-
-    change.className =
-        "summary-change "
-        +
-        (
-            profit > 0
-            ? "up"
-            : profit < 0
-            ? "down"
-            : ""
-        );
-
-
-    document
-        .getElementById(
-            "topCash"
-        )
-        .textContent =
-        money(cash);
-
-
-    document
-        .getElementById(
-            "currentDate"
-        )
-        .textContent =
-        new Date()
-        .toLocaleDateString(
-            "ko-KR",
-            {
-                year:"numeric",
-                month:"long",
-                day:"numeric"
-            }
-        );
-
-
-    renderDailyNews();
-
-    renderNews();
+  updatePortfolioStats();
 
 }
 
@@ -3878,166 +1998,761 @@ function renderHome(){
    PORTFOLIO
 ========================================================= */
 
-function renderPortfolio(){
+function getStockValue(){
 
-    const total =
-        getTotalAsset();
+  return Object.values(stocks)
+    .reduce(
+      (sum,stock) =>
+        sum + stock.price*stock.owned,
+      0
+    );
 
-
-    const stockValue =
-        getStockValue();
-
-
-    document
-        .getElementById(
-            "portfolioAsset"
-        )
-        .textContent =
-        money(total);
+}
 
 
-    document
-        .getElementById(
-            "portfolioStockValue"
-        )
-        .textContent =
-        money(stockValue);
+function getTotalAsset(){
+
+  return cash + getStockValue();
+
+}
 
 
-    document
-        .getElementById(
-            "portfolioCash"
-        )
-        .textContent =
-        money(cash);
+function updatePortfolioStats(){
+
+  const stockValue =
+    getStockValue();
+
+  const total =
+    getTotalAsset();
+
+  const profit =
+    total - INITIAL_CASH;
 
 
-    const container =
-        document
-        .getElementById(
-            "portfolioList"
+  document.getElementById("totalAsset")
+    .textContent =
+      money(total);
+
+  document.getElementById("stockValue")
+    .textContent =
+      money(stockValue);
+
+
+  const profitEl =
+    document.getElementById("profitLoss");
+
+  profitEl.textContent =
+    money(profit);
+
+  profitEl.className =
+    changeClass(profit);
+
+
+  document.getElementById("topCash")
+    .textContent =
+      money(cash);
+
+}
+
+
+/* =========================================================
+   MARKET PAGE
+========================================================= */
+
+function renderMarket(){
+
+  const selector =
+    document.getElementById("stockSelector");
+
+  selector.innerHTML = "";
+
+
+  Object.entries(stocks)
+    .forEach(([key,stock])=>{
+
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "stock-select-btn" +
+        (
+          selectedStock === key
+            ? " active"
+            : ""
         );
 
+      button.textContent =
+        stock.name;
 
-    container.innerHTML = "";
+      button.onclick = ()=>{
 
+        selectedStock = key;
 
-    let count = 0;
+        renderMarket();
 
+      };
 
-    for(
-        const key in stocks
-    ){
+      selector.appendChild(button);
 
-        const stock =
-            stocks[key];
-
-
-        if(
-            stock.owned <= 0
-        ){
-
-            continue;
-
-        }
+    });
 
 
-        count++;
+  const stock =
+    stocks[selectedStock];
+
+  const change =
+    getChange(stock);
 
 
-        const value =
-            stock.price
-            *
-            stock.owned;
+  document.getElementById("chartStockName")
+    .textContent =
+      stock.name;
+
+  document.getElementById("chartStockCode")
+    .textContent =
+      stock.code;
+
+  document.getElementById("tradeStockName")
+    .textContent =
+      stock.name;
+
+  document.getElementById("tradeStockCode")
+    .textContent =
+      stock.code;
+
+  document.getElementById("tradePrice")
+    .textContent =
+      money(stock.price);
 
 
-        const change =
-            stockChange(
-                stock
-            );
+  const changeEl =
+    document.getElementById("tradeChange");
+
+  changeEl.textContent =
+    percent(change);
+
+  changeEl.className =
+    "trade-change " +
+    changeClass(change);
 
 
-        const div =
-            document.createElement(
-                "div"
-            );
+  document.getElementById("holdingAmount")
+    .textContent =
+      stock.owned + "주";
+
+  document.getElementById("tradeCash")
+    .textContent =
+      money(cash);
 
 
-        div.className =
-            "portfolio-item";
+  updateEstimate();
+
+  updateMarketStatus();
+
+  drawCandles();
+
+}
 
 
-        div.innerHTML = `
+/* =========================================================
+   ESTIMATE
+========================================================= */
 
-            <div>
+function updateEstimate(){
 
-                <div class="portfolio-name">
-                    ${stock.name}
-                </div>
+  const stock =
+    stocks[selectedStock];
 
-                <div class="portfolio-sub">
-                    ${stock.code}
-                </div>
+  let quantity =
+    Number(
+      document.getElementById("tradeQuantity").value
+    );
 
-            </div>
+  if(!Number.isInteger(quantity) || quantity < 1){
+    quantity = 0;
+  }
 
+  const amount =
+    stock.price * quantity;
 
-            <div
-                class="portfolio-data"
-            >
-                ${stock.owned}주
-            </div>
+  document.getElementById("estimateAmount")
+    .textContent =
+      money(amount);
 
-
-            <div
-                class="portfolio-data"
-            >
-                ${money(value)}
-            </div>
-
-
-            <div
-                class="
-                    portfolio-data
-                    ${
-                        change >= 0
-                        ? "up"
-                        : "down"
-                    }
-                "
-            >
-
-                ${
-                    change >= 0
-                    ? "+"
-                    : ""
-                }${change.toFixed(2)}%
-
-            </div>
-
-        `;
+}
 
 
-        container.appendChild(
-            div
-        );
+/* =========================================================
+   TRADE
+========================================================= */
+
+function trade(type){
+
+  if(!isMarketOpen()){
+
+    showToast(
+      "거래 불가",
+      "현재 시장이 마감되었습니다."
+    );
+
+    return;
+
+  }
+
+
+  const stock =
+    stocks[selectedStock];
+
+  const quantity =
+    Number(
+      document.getElementById("tradeQuantity").value
+    );
+
+
+  if(
+    !Number.isInteger(quantity) ||
+    quantity <= 0
+  ){
+
+    showToast(
+      "거래 실패",
+      "거래 수량을 입력하세요."
+    );
+
+    return;
+
+  }
+
+
+  const amount =
+    stock.price * quantity;
+
+
+  if(type === "buy"){
+
+    if(cash < amount){
+
+      showToast(
+        "거래 실패",
+        "보유 현금이 부족합니다."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  if(type === "sell"){
+
+    if(stock.owned < quantity){
+
+      showToast(
+        "거래 실패",
+        "보유 수량이 부족합니다."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  const buyButton =
+    document.getElementById("buyButton");
+
+  const sellButton =
+    document.getElementById("sellButton");
+
+  buyButton.disabled = true;
+  sellButton.disabled = true;
+
+
+  const status =
+    document.getElementById("orderStatus");
+
+  status.textContent =
+    "주문 체결 처리 중...";
+
+  status.classList.add("show");
+
+
+  setTimeout(()=>{
+
+    if(type === "buy"){
+
+      cash -= amount;
+
+      stock.owned += quantity;
+
+    }else{
+
+      cash += amount;
+
+      stock.owned -= quantity;
 
     }
 
 
-    if(count === 0){
+    tradeHistory.unshift({
 
-        container.innerHTML = `
+      type,
+      stock:selectedStock,
+      name:stock.name,
+      quantity,
+      price:stock.price,
+      total:amount,
+      time:new Date()
+        .toLocaleString("ko-KR")
 
-            <div class="empty">
+    });
 
-                아직 보유한 종목이 없습니다.
 
-            </div>
+    if(tradeHistory.length > 100){
 
-        `;
+      tradeHistory =
+        tradeHistory.slice(0,100);
 
     }
+
+
+    saveData();
+
+    status.textContent =
+      type === "buy"
+        ? "✓ 매수 주문 체결 완료"
+        : "✓ 매도 주문 체결 완료";
+
+
+    showToast(
+      type === "buy"
+        ? "매수 체결"
+        : "매도 체결",
+      `${stock.name} ${quantity}주 · ${money(amount)}`
+    );
+
+
+    renderAll();
+
+
+    setTimeout(()=>{
+
+      status.classList.remove("show");
+
+    },1500);
+
+
+  },650);
+
+}
+
+
+/* =========================================================
+   CANDLE CHART
+========================================================= */
+
+function setChartRange(range,button){
+
+  chartRange = range;
+
+  document
+    .querySelectorAll(".chart-controls button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+  drawCandles();
+
+}
+
+
+function drawCandles(){
+
+  const canvas =
+    document.getElementById("stockChart");
+
+  if(!canvas) return;
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  if(rect.width <= 0 || rect.height <= 0){
+    return;
+  }
+
+  const dpr =
+    window.devicePixelRatio || 1;
+
+  canvas.width =
+    rect.width*dpr;
+
+  canvas.height =
+    rect.height*dpr;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.setTransform(
+    dpr,0,0,dpr,0,0
+  );
+
+
+  const width =
+    rect.width;
+
+  const height =
+    rect.height;
+
+  ctx.clearRect(
+    0,0,width,height
+  );
+
+
+  const all =
+    candles[selectedStock] || [];
+
+  let count = 35;
+
+  if(chartRange === "1W") count = 60;
+  if(chartRange === "1M") count = 100;
+  if(chartRange === "ALL") count = 150;
+
+
+  const data =
+    all.slice(-count);
+
+  if(data.length === 0) return;
+
+
+  let min =
+    Math.min(
+      ...data.map(c=>c.low)
+    );
+
+  let max =
+    Math.max(
+      ...data.map(c=>c.high)
+    );
+
+
+  const padding = 30;
+
+  const range =
+    max-min || 1;
+
+
+  /* grid */
+
+  ctx.strokeStyle =
+    "#18212d";
+
+  ctx.lineWidth = 1;
+
+  for(let i=0;i<5;i++){
+
+    const y =
+      padding +
+      (height-padding*2) *
+      i/4;
+
+    ctx.beginPath();
+
+    ctx.moveTo(0,y);
+    ctx.lineTo(width,y);
+
+    ctx.stroke();
+
+  }
+
+
+  /* candles */
+
+  const gap = 3;
+
+  const candleWidth =
+    Math.max(
+      3,
+      (width-gap*data.length) /
+      data.length
+    );
+
+
+  data.forEach((candle,index)=>{
+
+    const x =
+      index *
+      (candleWidth+gap) +
+      gap;
+
+
+    const y =
+      valueToY(
+        candle.high,
+        min,
+        range,
+        height,
+        padding
+      );
+
+    const lowY =
+      valueToY(
+        candle.low,
+        min,
+        range,
+        height,
+        padding
+      );
+
+    const openY =
+      valueToY(
+        candle.open,
+        min,
+        range,
+        height,
+        padding
+      );
+
+    const closeY =
+      valueToY(
+        candle.close,
+        min,
+        range,
+        height,
+        padding
+      );
+
+
+    const rising =
+      candle.close >= candle.open;
+
+
+    const candleColor =
+      rising
+        ? "#ff6077"
+        : "#4c9cff";
+
+
+    /* wick */
+
+    ctx.strokeStyle =
+      candleColor;
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      x+candleWidth/2,
+      y
+    );
+
+    ctx.lineTo(
+      x+candleWidth/2,
+      lowY
+    );
+
+    ctx.stroke();
+
+
+    /* body */
+
+    const bodyTop =
+      Math.min(
+        openY,
+        closeY
+      );
+
+    const bodyHeight =
+      Math.max(
+        2,
+        Math.abs(
+          closeY-openY
+        )
+      );
+
+
+    ctx.fillStyle =
+      candleColor;
+
+    ctx.fillRect(
+      x,
+      bodyTop,
+      candleWidth,
+      bodyHeight
+    );
+
+  });
+
+
+  /* current price */
+
+  const stock =
+    stocks[selectedStock];
+
+  const current =
+    stock.price;
+
+  const currentY =
+    valueToY(
+      current,
+      min,
+      range,
+      height,
+      padding
+    );
+
+
+  ctx.strokeStyle =
+    "#59687c";
+
+  ctx.setLineDash([4,4]);
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    0,
+    currentY
+  );
+
+  ctx.lineTo(
+    width,
+    currentY
+  );
+
+  ctx.stroke();
+
+  ctx.setLineDash([]);
+
+
+  ctx.fillStyle =
+    "#dce5ef";
+
+  ctx.font =
+    "10px Arial";
+
+  ctx.fillText(
+    money(current),
+    8,
+    Math.max(
+      12,
+      currentY-5
+    )
+  );
+
+}
+
+
+function valueToY(
+  value,
+  min,
+  range,
+  height,
+  padding
+){
+
+  return (
+    height-padding -
+    ((value-min)/range) *
+    (height-padding*2)
+  );
+
+}
+
+
+/* =========================================================
+   ASSETS
+========================================================= */
+
+function renderAssets(){
+
+  const stockValue =
+    getStockValue();
+
+
+  document.getElementById("assetTotal")
+    .textContent =
+      money(getTotalAsset());
+
+  document.getElementById("assetCash")
+    .textContent =
+      money(cash);
+
+  document.getElementById("assetStocks")
+    .textContent =
+      money(stockValue);
+
+
+  const table =
+    document.getElementById("assetTable");
+
+  table.innerHTML = "";
+
+
+  Object.values(stocks)
+    .forEach(stock=>{
+
+      if(stock.owned <= 0) return;
+
+
+      const value =
+        stock.price *
+        stock.owned;
+
+      const change =
+        getChange(stock);
+
+
+      const tr =
+        document.createElement("tr");
+
+
+      tr.innerHTML = `
+        <td>
+          <strong>${stock.name}</strong><br>
+          <span style="color:#647186;font-size:10px">
+            ${stock.code}
+          </span>
+        </td>
+
+        <td>${stock.owned}주</td>
+
+        <td>${money(stock.price)}</td>
+
+        <td>${money(value)}</td>
+
+        <td class="${changeClass(change)}">
+          ${percent(change)}
+        </td>
+      `;
+
+
+      table.appendChild(tr);
+
+    });
+
+
+  if(!table.children.length){
+
+    table.innerHTML = `
+      <tr>
+        <td
+          colspan="5"
+          style="
+            text-align:center;
+            color:#647186;
+            padding:35px;
+          "
+        >
+          현재 보유 중인 종목이 없습니다.
+        </td>
+      </tr>
+    `;
+
+  }
 
 }
 
@@ -4048,291 +2763,377 @@ function renderPortfolio(){
 
 function renderHistory(){
 
-    const container =
-        document
-        .getElementById(
-            "historyList"
-        );
+  const list =
+    document.getElementById("historyList");
+
+  list.innerHTML = "";
 
 
-    container.innerHTML = "";
+  document.getElementById("historyCount")
+    .textContent =
+      tradeHistory.length +
+      " TRANSACTIONS";
 
 
-    if(
-        tradeHistory.length === 0
-    ){
+  if(!tradeHistory.length){
 
-        container.innerHTML = `
+    list.innerHTML = `
+      <div style="
+        text-align:center;
+        color:#647186;
+        padding:40px;
+        font-size:12px;
+      ">
+        아직 거래내역이 없습니다.
+      </div>
+    `;
 
-            <div class="empty">
-                아직 거래내역이 없습니다.
-            </div>
+    return;
 
-        `;
-
-        return;
-
-    }
-
-
-    tradeHistory.forEach(
-        item=>{
-
-            const div =
-                document.createElement(
-                    "div"
-                );
+  }
 
 
-            div.className =
-                "history-item";
+  tradeHistory.forEach(item=>{
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "history-row";
 
 
-            div.innerHTML = `
-
-                <div class="history-left">
-
-                    <div
-                        class="
-                            history-type
-                            ${
-                                item.type === "매수"
-                                ? "history-buy"
-                                : "history-sell"
-                            }
-                        "
-                    >
-                        ${item.type}
-                    </div>
-
-
-                    <div>
-
-                        <div
-                            class="history-name"
-                        >
-                            ${item.name}
-                            ${item.quantity}주
-                        </div>
-
-                        <div
-                            class="history-time"
-                        >
-                            ${item.time}
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="history-money">
-
-                    ${money(
-                        item.price
-                        *
-                        item.quantity
-                    )}
-
-                </div>
-
-            `;
-
-
-            container.appendChild(
-                div
-            );
-
+    row.innerHTML = `
+      <div class="type ${
+        item.type === "buy"
+          ? "buy-type"
+          : "sell-type"
+      }">
+        ${
+          item.type === "buy"
+            ? "매수"
+            : "매도"
         }
-    );
+      </div>
+
+      <div class="history-name">
+        <strong>${item.name}</strong>
+        <span>
+          ${item.quantity}주 ×
+          ${money(item.price)}
+        </span>
+      </div>
+
+      <div class="history-price">
+        ${money(item.total)}
+      </div>
+
+      <div class="history-time">
+        ${item.time}
+      </div>
+    `;
+
+
+    list.appendChild(row);
+
+  });
 
 }
 
 
 /* =========================================================
-   MESSAGE
+   NEWS MODAL
 ========================================================= */
 
-let messageTimer;
+function openNews(news){
+
+  document.getElementById("modalTitle")
+    .textContent =
+      news.title;
+
+  document.getElementById("modalDescription")
+    .textContent =
+      news.description;
 
 
-function showMessage(
-    text
-){
+  const box =
+    document.getElementById("modalImpacts");
 
-    const element =
-        document.getElementById(
-            "message"
-        );
+  box.innerHTML = "";
 
 
-    element.textContent =
-        text;
+  news.tags.forEach(tag=>{
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "impact";
+
+    item.textContent =
+      tag;
+
+    box.appendChild(item);
+
+  });
 
 
-    element.classList.add(
-        "show"
+  document.getElementById("newsModal")
+    .classList.add("show");
+
+}
+
+
+function closeNews(){
+
+  document.getElementById("newsModal")
+    .classList.remove("show");
+
+}
+
+
+document.getElementById("newsModal")
+  .addEventListener("click",e=>{
+
+    if(
+      e.target.id === "newsModal"
+    ){
+      closeNews();
+    }
+
+  });
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(title,message){
+
+  const container =
+    document.getElementById("toastContainer");
+
+  const toast =
+    document.createElement("div");
+
+  toast.className =
+    "toast";
+
+
+  toast.innerHTML = `
+    <strong>${title}</strong>
+    <span>${message}</span>
+  `;
+
+
+  container.appendChild(toast);
+
+
+  setTimeout(()=>{
+
+    toast.style.opacity = "0";
+
+    toast.style.transform =
+      "translateY(10px)";
+
+    setTimeout(
+      ()=>toast.remove(),
+      250
     );
 
-
-    clearTimeout(
-        messageTimer
-    );
-
-
-    messageTimer =
-        setTimeout(
-            ()=>{
-                element.classList.remove(
-                    "show"
-                );
-            },
-            1800
-        );
+  },3200);
 
 }
 
 
 /* =========================================================
-   RENDER ALL
+   INDEX
+========================================================= */
+
+function updateIndexes(){
+
+  const movement =
+    (Math.random()-.48)*.15;
+
+
+  const kospi =
+    2734.21+movement;
+
+  const kosdaq =
+    842.16+movement*.7;
+
+
+  document.getElementById("kospiValue")
+    .textContent =
+      kospi.toFixed(2);
+
+  document.getElementById("kosdaqValue")
+    .textContent =
+      kosdaq.toFixed(2);
+
+
+  const kospiChange =
+    movement/
+    2734.21*
+    100;
+
+  const kosdaqChange =
+    movement/
+    842.16*
+    100;
+
+
+  const k1 =
+    document.getElementById("kospiChange");
+
+  const k2 =
+    document.getElementById("kosdaqChange");
+
+
+  k1.textContent =
+    percent(kospiChange);
+
+  k2.textContent =
+    percent(kosdaqChange);
+
+
+  k1.className =
+    "index-change " +
+    changeClass(kospiChange);
+
+  k2.className =
+    "index-change " +
+    changeClass(kosdaqChange);
+
+
+  const mood =
+    document.getElementById("marketMood");
+
+
+  if(kospiChange > .03){
+
+    mood.textContent =
+      "🟢 강세";
+
+  }else if(kospiChange < -.03){
+
+    mood.textContent =
+      "🔵 약세";
+
+  }else{
+
+    mood.textContent =
+      "🟡 관망";
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER
 ========================================================= */
 
 function renderAll(){
 
-    renderStocks();
+  updateMarketStatus();
 
-    renderDetail();
+  renderDashboard();
 
-    renderHome();
+  renderMarket();
 
-    renderPortfolio();
+  renderAssets();
 
-    renderHistory();
+  renderHistory();
+
+  updatePortfolioStats();
 
 }
 
 
 /* =========================================================
-   START
+   INIT
 ========================================================= */
 
-load();
+loadData();
+
+createInitialCandles();
+
+generateDailyNews();
 
 renderAll();
 
-
-/*
- * 시장 가격은 5초마다
- * 조금씩 변동
- */
-
-setInterval(
-    ()=>{
-
-        for(
-            const key in stocks
-        ){
-
-            const stock =
-                stocks[key];
+updateIndexes();
 
 
-            /*
-             * 뉴스가 영향을 준 가격을
-             * 중심으로 작은 변동
-             */
+/* =========================================================
+   MARKET UPDATE
+========================================================= */
 
-            const movement =
-                (
-                    Math.random()
-                    -
-                    .5
-                )
-                *
-                stock.price
-                *
-                .003;
+setInterval(()=>{
+
+  updateMarket();
+
+},5000);
 
 
-            stock.price +=
-                movement;
+/* =========================================================
+   CLOCK
+========================================================= */
+
+setInterval(()=>{
+
+  updateMarketStatus();
+
+},1000);
 
 
-            stock.price =
-                Math.round(
-                    stock.price / 100
-                )
-                *
-                100;
+/* =========================================================
+   DAILY NEWS CHECK
+========================================================= */
+
+setInterval(()=>{
+
+  if(getDateKey() !== previousDate){
+
+    generateDailyNews();
+
+    renderAll();
+
+  }
+
+},30000);
 
 
-            stock.history.push(
-                stock.price
-            );
+/* =========================================================
+   INDEX UPDATE
+========================================================= */
+
+setInterval(()=>{
+
+  updateIndexes();
+
+},5000);
 
 
-            if(
-                stock.history.length > 30
-            ){
-
-                stock.history.shift();
-
-            }
-
-        }
-
-
-        save();
-
-        renderAll();
-
-    },
-    5000
-);
-
-
-/*
- * 자정이 지나면
- * 새로운 뉴스 자동 생성
- */
-
-setInterval(
-    ()=>{
-
-        const today =
-            getDateKey();
-
-
-        if(
-            today !==
-            dailyState.date
-        ){
-
-            generateDailyNews();
-
-            renderAll();
-
-            showMessage(
-                "새로운 하루가 시작되었습니다."
-            );
-
-        }
-
-    },
-    30000
-);
-
-
-/*
- * 그래프
- */
+/* =========================================================
+   RESIZE
+========================================================= */
 
 window.addEventListener(
-    "resize",
-    drawChart
+  "resize",
+  ()=>{
+    if(
+      document
+        .getElementById("market")
+        .classList
+        .contains("active")
+    ){
+      drawCandles();
+    }
+  }
 );
 
 </script>
 
 </body>
-  </html>
+</html>
